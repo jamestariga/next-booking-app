@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/providers/theme-provider'
+import { Toaster } from '@/components/ui/sonner'
+import PopOver from '@/components/Navigation/PopOver'
 
 export const metadata: Metadata = {
   title: 'Kols Studio',
@@ -21,7 +23,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <nav>
+            <PopOver />
+          </nav>
+          <main className='px-8 min-h-screen flex justify-center items-center'>
+            {children}
+          </main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

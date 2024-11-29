@@ -1,14 +1,5 @@
-import { login, signup } from '@/server-actions/auth'
+import LoginForm from '@/features/auth/LoginForm'
 
 export default function LoginPage() {
-  return (
-    <form className='flex flex-col gap-4 min-h-screen justify-center items-center'>
-      <label htmlFor='email'>Email:</label>
-      <input id='email' name='email' type='email' required />
-      <label htmlFor='password'>Password:</label>
-      <input id='password' name='password' type='password' required />
-      <button formAction={login}>Log in</button>
-      <button formAction={signup}>Sign up</button>
-    </form>
-  )
+  return <LoginForm />
 }

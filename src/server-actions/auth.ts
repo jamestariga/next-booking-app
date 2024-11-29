@@ -1,46 +1,116 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-
 import { createClient } from '@/supabase/auth/server'
+import { State } from '@/features/auth/types/auth.types'
+import { LoginSchema, SignUpSchema } from '@/features/auth/schema/schema'
 
-export async function login(formData: FormData) {
+export async function login(
+  prevState: State,
+  formData: FormData
+): Promise<State> {
   const supabase = await createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+  // Parse and validate form data
+  const rawData = {
+    email: formData.get('email'),
+    password: formData.get('password'),
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const result = LoginSchema.safeParse(rawData)
 
+  if (!result.success) {
+    return {
+      ...prevState,
+      success: false,
+      errors: result.error.flatten().fieldErrors,
+    }
+  }
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email: result.data.email,
+    password: result.data.password,
+  })
+
+  // Wrong Credentials
   if (error) {
-    redirect('/error')
+    return {
+      ...prevState,
+      success: false,
+      error: error.message,
+    }
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath('/login', 'layout')
+
+  // On success, close the modal by setting isOpen to false
+  return {
+    success: true,
+    isOpen: false, // This will close the modal
+  }
 }
 
-export async function signup(formData: FormData) {
+export async function signup(
+  prevState: State,
+  formData: FormData
+): Promise<State> {
   const supabase = await createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+  // Parse and validate form data
+  const rawData = {
+    email: formData.get('email'),
+    password: formData.get('password'),
+    confirm_password: formData.get('confirm_password'),
+    first_name: formData.get('first_name'),
+    last_name: formData.get('last_name'),
+    role: formData.get('role'),
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  const result = SignUpSchema.safeParse(rawData)
 
+  if (!result.success) {
+    return {
+      ...prevState,
+      success: false,
+      errors: result.error.flatten().fieldErrors,
+    }
+  }
+
+  const { error } = await supabase.auth.signUp({
+    email: result.data.email,
+    password: result.data.password,
+    options: {
+      data: {
+        first_name: result.data.first_name,
+        last_name: result.data.last_name,
+        display_name: `${result.data.first_name} ${result.data.last_name}`,
+        role: result.data.role,
+      },
+    },
+  })
+
+  // User already exists
   if (error) {
-    redirect('/error')
+    return {
+      ...prevState,
+      success: false,
+      error: error.message,
+    }
   }
+
+  revalidatePath('/signup', 'layout')
+
+  // On success, close the modal by setting isOpen to false
+  return {
+    success: true,
+    isOpen: false, // This will close the modal
+  }
+}
+
+export const signOut = async () => {
+  const supabase = await createClient()
+
+  await supabase.auth.signOut()
 
   revalidatePath('/', 'layout')
-  redirect('/')
 }
