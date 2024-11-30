@@ -21,11 +21,12 @@ import {
   LoginFormData,
   SignUpFormData,
 } from '../schema/schema'
+import { loginLabels, signUpLabels } from '../utils/form-labels'
 
 type LoginFields = keyof LoginFormData
 type SignUpFields = keyof SignUpFormData
 
-const AuthForm = ({ type, labels, error, action }: IForm) => {
+const AuthForm = ({ type, isModal, error, action }: IForm) => {
   const { pending } = useFormStatus()
   const isLogin = type === 'Login'
 
@@ -44,6 +45,8 @@ const AuthForm = ({ type, labels, error, action }: IForm) => {
     resolver: zodResolver(isLogin ? LoginSchema : SignUpSchema),
     defaultValues: initialValues,
   })
+
+  const formLabels = isLogin ? loginLabels : signUpLabels
 
   const isLoginField = (field: string): field is LoginFields => {
     return ['email', 'password'].includes(field)
@@ -97,7 +100,7 @@ const AuthForm = ({ type, labels, error, action }: IForm) => {
 
     return fieldsToRender.map((fieldName) => {
       // Find the corresponding label configuration
-      const labelConfig = labels.find((label) => label.name === fieldName)
+      const labelConfig = formLabels.find((label) => label.name === fieldName)
 
       return (
         <FormField
@@ -126,7 +129,12 @@ const AuthForm = ({ type, labels, error, action }: IForm) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className='space-y-8 max-w-3xl mx-auto py-10'>
+      <form
+        onSubmit={onSubmit}
+        className={`max-w-3xl ${
+          !isModal && 'space-y-8 mx-auto py-10'
+        } space-y-4`}
+      >
         {renderFields()}
         {error && <div className='text-red-500'>{error}</div>}
         <Button

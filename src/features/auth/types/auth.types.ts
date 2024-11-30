@@ -24,7 +24,7 @@ export type ISignUp = {
 
 export type IForm = {
   type: 'Login' | 'Sign Up'
-  labels: IFormLabels[]
+  isModal?: boolean
   error?: string
   action: (formData: FormData) => void
 }

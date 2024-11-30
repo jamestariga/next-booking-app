@@ -8,7 +8,7 @@ import { IFormLabels, State } from './types/auth.types'
 import { toast } from 'sonner'
 
 const initialState: State = {
-  isOpen: true,
+  success: false,
 }
 
 const LoginForm = () => {
@@ -25,19 +25,9 @@ const LoginForm = () => {
     }
   }, [state?.success, router])
 
-  const labels: IFormLabels[] = [
-    { name: 'email', value: 'Email', type: 'email' },
-    { name: 'password', value: 'Password', type: 'password' },
-  ]
-
   return (
     <div className='max-w-xl w-full mx-auto border-secondary px-10 rounded-lg dark:shadow-lg shadow-2xl'>
-      <AuthForm
-        type='Login'
-        labels={labels}
-        error={state?.error}
-        action={formAction}
-      />
+      <AuthForm type='Login' error={state?.error} action={formAction} />
     </div>
   )
 }
