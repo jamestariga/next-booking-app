@@ -1,39 +1,75 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { signOut } from '@/server-actions/auth'
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle'
 
-const PopOver = () => {
+const PopOver = ({ email }: { email: string }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
-  const handleLogin = () => {
-    router.push('/login')
-  }
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
 
-  const handleSignUp = () => {
-    router.push('/signup')
+  const handleRedirect = (pathName: string) => {
+    router.push(pathName, { scroll: false })
   }
 
   return (
-    <Popover>
-      <PopoverTrigger className='flex items-center space-x-4 py-2 px-4 rounded-full '>
-        <HamburgerMenuIcon />
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger className='flex items-center space-x-4 py-2 px-4 rounded-full'>
+        <HamburgerMenuIcon width={24} height={24} />
       </PopoverTrigger>
-      <PopoverContent className='w-56 bg-background p-2 rounded-lg shadow-lg'>
-        <div className='flex flex-col gap-2'>
-          <Button onClick={handleLogin} className='w-full'>
-            Login
-          </Button>
-          <Button onClick={handleSignUp} className='w-full'>
-            Sign Up
-          </Button>
-          <Button onClick={signOut} className='w-full'>
-            Logout
-          </Button>
+      <PopoverContent className='w-full mt-4 min-w-60' align='end'>
+        <div className='flex flex-col gap-2 w-full'>
+          {email && <div className='border-b pb-2'>{email}</div>}
+          <div className='flex flex-col items-start'>
+            {email ? (
+              <>
+                <Button
+                  onClick={() => handleRedirect('/account')}
+                  variant='none'
+                  size='noPadding'
+                  className='w-full'
+                >
+                  Account
+                </Button>
+                <Button
+                  onClick={signOut}
+                  variant='none'
+                  size='noPadding'
+                  className='w-full'
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={() => handleRedirect('/login')}
+                  variant='none'
+                  size='noPadding'
+                  className='w-full'
+                >
+                  Login
+                </Button>
+                <Button
+                  onClick={() => handleRedirect('/signup')}
+                  variant='none'
+                  size='noPadding'
+                  className='w-full'
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
+          </div>
           <ThemeToggle />
         </div>
       </PopoverContent>
