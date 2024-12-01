@@ -13,12 +13,12 @@
 
 ## In Progress
 
-- [] Create user profile page with personal info
+- [ ] Create user profile page with personal info
 
 ## To Do
 
-- [] Create a reservation page
-- [] Create a page for users to view their reservations
+- [ ] Create a reservation page
+- [ ] Create a page for users to view their reservations
 
 ## Project setup
 
