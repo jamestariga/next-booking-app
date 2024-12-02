@@ -4,7 +4,7 @@ import { useActionState, useEffect } from 'react'
 import { login } from '@/server-actions/auth'
 import AuthForm from './component/AuthForm'
 import { useRouter } from 'next/navigation'
-import { IFormLabels, State } from './types/auth.types'
+import { State } from './types/auth.types'
 import { toast } from 'sonner'
 
 const initialState: State = {

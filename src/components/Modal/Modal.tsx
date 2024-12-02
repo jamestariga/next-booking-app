@@ -28,7 +28,7 @@ const Modal = ({
   const router = useRouter()
 
   const handleOpenChange = () => {
-    router.back()
+    router.replace('/')
   }
 
   return (
