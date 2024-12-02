@@ -10,14 +10,14 @@
 - [x] Create a theme provider
 - [x] Create a Navigation bar
 - [x] Make a user dashboard with different pages the user can access
+- [x] Create user profile page with personal info
 
 ## In Progress
 
-- [ ] Create user profile page with personal info
+- [ ] Create a reservation page
 
 ## To Do
 
-- [ ] Create a reservation page
 - [ ] Create a page for users to view their reservations
 
 ## Project setup

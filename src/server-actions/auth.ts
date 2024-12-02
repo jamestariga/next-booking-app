@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/supabase/auth/server'
 import { State } from '@/features/auth/types/auth.types'
 import { LoginSchema, SignUpSchema } from '@/features/auth/schema/schema'
+import { redirect } from 'next/navigation'
 
 export async function login(
   prevState: State,
@@ -113,4 +114,5 @@ export const signOut = async () => {
   await supabase.auth.signOut()
 
   revalidatePath('/', 'layout')
+  redirect('/')
 }

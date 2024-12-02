@@ -1,10 +1,10 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
+import { useActionState } from 'react'
+import useRedirectOnSuccess from '@/hooks/useRedirectOnSuccess'
 import Modal from '@/components/Modal/Modal'
 import AuthForm from '@/features/auth/component/AuthForm'
 import { login } from '@/server-actions/auth'
-import { useRouter } from 'next/navigation'
 import { State } from '@/features/auth/types/auth.types'
 
 const initialState: State = {
@@ -20,14 +20,7 @@ const Page = () => {
   const description = "Don't have an account? "
   const url = 'signup'
 
-  const router = useRouter()
-
-  // Handle redirect on successful login
-  useEffect(() => {
-    if (state?.success) {
-      router.push('/')
-    }
-  }, [state?.success, router])
+  useRedirectOnSuccess(state?.success!, '/account')
 
   return (
     <Modal
