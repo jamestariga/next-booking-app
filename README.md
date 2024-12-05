@@ -15,6 +15,10 @@
 ## In Progress
 
 - [ ] Create a reservation page
+  - [ ] Create a calendar component to select a date and time
+  - [ ] Create a select component to select a barber
+  - [ ] Create a select component to select a service
+  - [ ] Create a button to submit the reservation
 
 ## To Do
 

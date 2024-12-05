@@ -146,9 +146,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "reservations_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
+            foreignKeyName: "reservations_barber_id_fkey"
+            columns: ["barber_id"]
+            isOneToOne: false
+            referencedRelation: "barbers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reservations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
