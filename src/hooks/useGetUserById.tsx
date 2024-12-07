@@ -3,10 +3,20 @@
 import { createClient } from '@/supabase/auth/client'
 import { useEffect, useState } from 'react'
 
+type User = {
+  id: number
+  display_name: string
+  user_id: string
+  first_name: string
+  last_name: string
+  created_at: string
+  role: string
+}
+
 const useGetUserById = (id: string) => {
   const supabase = createClient()
 
-  const [user, setUser] = useState<any>()
+  const [user, setUser] = useState<User>()
 
   useEffect(() => {
     const getUser = async () => {
@@ -16,7 +26,9 @@ const useGetUserById = (id: string) => {
         .eq('user_id', id)
         .single()
 
-      setUser(data)
+      if (data) {
+        setUser(data)
+      }
     }
 
     getUser()
