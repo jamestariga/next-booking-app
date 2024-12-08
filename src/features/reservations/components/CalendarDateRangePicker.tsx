@@ -1,10 +1,6 @@
-// This component will handle the date and time picker
-// Workflow: User selects a date then a time selection will show up and show the list of times with intervals of 1 hour in between (e.g 5 - 6 pm, 6 - 7pm)
-// User selects a time and then submits the reservation using the reservations server action
-
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -15,6 +11,7 @@ import { toast } from 'sonner'
 type TimeSlot = {
   start: string
   end: string
+  active: boolean
 }
 
 type props = {
@@ -22,26 +19,29 @@ type props = {
   userId?: number
 }
 
+const generateTimeSlots = (): TimeSlot[] => {
+  const slots: TimeSlot[] = []
+  for (let hour = 9; hour < 20; hour++) {
+    slots.push({
+      start: `${hour}:00`,
+      end: `${hour + 1}:00`,
+      active: false,
+    })
+  }
+  return slots
+}
+
 const CalendarDateRangePicker = ({ barberId, userId }: props) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
     null
   )
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(generateTimeSlots())
   const [isPending, setIsPending] = useState(false)
 
-  // Generate time slots from 9 AM to 5 PM
-  const generateTimeSlots = (): TimeSlot[] => {
-    const slots: TimeSlot[] = []
-    for (let hour = 9; hour < 17; hour++) {
-      slots.push({
-        start: `${hour}:00`,
-        end: `${hour + 1}:00`,
-      })
-    }
-    return slots
-  }
-
-  const timeSlots = generateTimeSlots()
+  useEffect(() => {
+    setSelectedDate(new Date())
+  }, [])
 
   const isDateDisabled = (date: Date) => {
     const today = new Date()
@@ -49,8 +49,20 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
     return date < today
   }
 
+  // Generate time slots from 9 AM to 5 PM
   const handleTimeSlotSelect = (slot: TimeSlot) => {
-    setSelectedTimeSlot(slot)
+    setTimeSlots((prevSlots) =>
+      prevSlots.map((s) =>
+        s.start === slot.start
+          ? { ...s, active: !s.active }
+          : { ...s, active: false }
+      )
+    )
+    setSelectedTimeSlot((prevSelected) =>
+      prevSelected && prevSelected.start === slot.start
+        ? null
+        : { ...slot, active: true }
+    )
   }
 
   const handleReservation = async () => {
@@ -71,13 +83,21 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
       const endDate = new Date(selectedDate)
       endDate.setHours(parseInt(endHour), 0, 0)
 
-      // await createReservation()
+      await createReservation({
+        userId: userId!,
+        barberId,
+        date: selectedDate,
+        start: selectedTimeSlot.start,
+        end: selectedTimeSlot.end,
+      })
+
       toast('Reservation created successfully')
 
       // Reset selections
       setSelectedDate(undefined)
       setSelectedTimeSlot(null)
     } catch (error) {
+      console.log(error)
       toast.error('Failed to create reservation')
     } finally {
       setIsPending(false)
@@ -85,7 +105,7 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
   }
 
   return (
-    <div className='space-y-6'>
+    <div className='flex flex-col gap-4'>
       <div className='w-full'>
         <h3 className='mb-4 text-lg font-medium'>Select Date</h3>
         <Calendar
@@ -93,7 +113,13 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
           selected={selectedDate}
           onSelect={setSelectedDate}
           disabled={isDateDisabled}
-          className='rounded-md border flex flex-col items-center justify-center'
+          className='rounded-2xl border flex flex-col items-center justify-center shadow-md'
+          classNames={{
+            table: 'md:min-w-[400px]',
+            cell: 'w-full',
+            head: 'w-full',
+            head_cell: 'w-full text-start text-muted-foreground px-2',
+          }}
         />
       </div>
 
@@ -106,11 +132,10 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
             {timeSlots.map((slot, index) => (
               <Button
                 key={index}
-                variant={selectedTimeSlot === slot ? 'default' : 'outline'}
+                variant={slot.active ? 'default' : 'outline'}
                 className={cn(
                   'w-full',
-                  selectedTimeSlot === slot &&
-                    'bg-primary text-primary-foreground'
+                  slot.active && 'bg-primary text-primary-foreground'
                 )}
                 onClick={() => handleTimeSlotSelect(slot)}
               >
@@ -130,19 +155,11 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
         </div>
       )}
 
-      {selectedDate && selectedTimeSlot && (
+      {!isPending && selectedDate && selectedTimeSlot && (
         <div className='mt-4'>
           <Button onClick={handleReservation}>Confirm Reservation</Button>
         </div>
       )}
-      <code>
-        {JSON.stringify({
-          selectedDate,
-          selectedTimeSlot,
-          barberId,
-          userId,
-        })}
-      </code>
     </div>
   )
 }

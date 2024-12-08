@@ -18,8 +18,6 @@ const BarberList = async () => {
       display_name: barber.profiles?.display_name!,
     })) ?? []
 
-  console.log(barbers)
-
   return (
     <ListView
       data={barbers}
