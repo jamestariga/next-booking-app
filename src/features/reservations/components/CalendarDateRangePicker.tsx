@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
@@ -11,6 +9,7 @@ import { toast } from 'sonner'
 type TimeSlot = {
   start: string
   end: string
+  display: string
   active: boolean
 }
 
@@ -22,9 +21,13 @@ type props = {
 const generateTimeSlots = (): TimeSlot[] => {
   const slots: TimeSlot[] = []
   for (let hour = 9; hour < 20; hour++) {
+    const ampm = hour >= 12 ? 'PM' : 'AM'
+    const displayHour = hour > 12 ? hour - 12 : hour
+
     slots.push({
       start: `${hour}:00`,
       end: `${hour + 1}:00`,
+      display: `${displayHour}:00 ${ampm}`,
       active: false,
     })
   }
@@ -100,6 +103,7 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
       console.log(error)
       toast.error('Failed to create reservation')
     } finally {
+      // TODO: Add router.push to redirect to the reservations page when done creating the user reservations page
       setIsPending(false)
     }
   }
@@ -139,7 +143,7 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
                 )}
                 onClick={() => handleTimeSlotSelect(slot)}
               >
-                {slot.start}
+                {slot.display}
               </Button>
             ))}
           </div>

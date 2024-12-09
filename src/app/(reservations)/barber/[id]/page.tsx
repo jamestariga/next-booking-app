@@ -26,7 +26,7 @@ const BarberReservation = async ({ params }: { params: Params }) => {
   const barber = barberData?.profiles
 
   return (
-    <div className='mx-auto max-w-fit mt-40'>
+    <div className='mx-auto max-w-fit'>
       {user && barber && (
         <Reservations
           userDetails={user}
