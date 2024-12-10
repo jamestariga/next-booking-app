@@ -116,8 +116,7 @@ export type Database = {
           created_at: string
           end: string
           id: number
-          price: number
-          service: string
+          service: Json
           start: string
           status: string
           user_id: number
@@ -127,8 +126,7 @@ export type Database = {
           created_at?: string
           end: string
           id?: number
-          price: number
-          service: string
+          service: Json
           start: string
           status: string
           user_id: number
@@ -138,8 +136,7 @@ export type Database = {
           created_at?: string
           end?: string
           id?: number
-          price?: number
-          service?: string
+          service?: Json
           start?: string
           status?: string
           user_id?: number
@@ -166,18 +163,21 @@ export type Database = {
           barber_id: number
           created_at: string
           id: number
+          price: number | null
           service_name: string
         }
         Insert: {
           barber_id: number
           created_at?: string
           id?: number
+          price?: number | null
           service_name: string
         }
         Update: {
           barber_id?: number
           created_at?: string
           id?: number
+          price?: number | null
           service_name?: string
         }
         Relationships: [

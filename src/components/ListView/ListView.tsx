@@ -39,7 +39,7 @@ export default function ListView<T>({
     <div
       className={`grid ${getGridTemplateColumns(
         data.length
-      )} place-items-center gap-4 w-full`}
+      )} place-items-center gap-8 w-full`}
     >
       {data.map((item, index) => (
         <div key={index} className='w-full place-items-center'>

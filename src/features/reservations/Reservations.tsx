@@ -4,7 +4,8 @@ import { useState } from 'react'
 import useGetUserById from '@/hooks/useGetUserById'
 import { User } from '@supabase/supabase-js'
 import CalendarDateRangePicker from './components/CalendarDateRangePicker'
-import ServiceSelection, { Service } from './components/ServiceSelection'
+import ServiceSelection from './components/ServiceSelection'
+import { Service } from './types/reservations.types'
 
 type ReservationsProps = {
   userDetails: User
@@ -36,7 +37,11 @@ const Reservations = ({
         <ServiceSelection onSelectService={handleServiceSelection} />
       )}
       {selectedServiceDetails && (
-        <CalendarDateRangePicker barberId={barberId} userId={userData?.id} />
+        <CalendarDateRangePicker
+          barberId={barberId}
+          userId={userData?.id}
+          service={selectedServiceDetails}
+        />
       )}
     </div>
   )

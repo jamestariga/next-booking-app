@@ -7,3 +7,10 @@ export type Reservation = {
   price: number
   status: string
 }
+
+export type Service = {
+  id: number
+  barber_id: number
+  service_name: string
+  price: number | null
+}

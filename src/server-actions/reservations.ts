@@ -1,8 +1,8 @@
 'use server'
 
+import { Service } from '@/features/reservations/types/reservations.types'
 import { createClient } from '@/supabase/auth/server'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 type Reservation = {
   userId: number
@@ -10,6 +10,7 @@ type Reservation = {
   start: string
   date: Date
   end: string
+  service: Service
 }
 
 export const createReservation = async ({
@@ -18,6 +19,7 @@ export const createReservation = async ({
   date,
   start,
   end,
+  service,
 }: Reservation) => {
   const supabase = await createClient()
   const dateStr = date ? date.toISOString().split('T')[0] : ''
@@ -27,10 +29,9 @@ export const createReservation = async ({
   const { error } = await supabase.from('reservations').insert({
     user_id: userId,
     barber_id: barberId,
-    service: 'haircut',
+    service: service,
     start: startStr,
     end: endStr,
-    price: 100,
     status: 'pending',
   })
 

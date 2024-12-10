@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { createReservation } from '@/server-actions/reservations'
 import { toast } from 'sonner'
+import { Service } from '../types/reservations.types'
 
 type TimeSlot = {
   start: string
@@ -16,6 +17,7 @@ type TimeSlot = {
 type props = {
   barberId: number
   userId?: number
+  service: Service
 }
 
 const generateTimeSlots = (): TimeSlot[] => {
@@ -34,7 +36,7 @@ const generateTimeSlots = (): TimeSlot[] => {
   return slots
 }
 
-const CalendarDateRangePicker = ({ barberId, userId }: props) => {
+const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>()
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
     null
@@ -44,6 +46,7 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
 
   useEffect(() => {
     setSelectedDate(new Date())
+    console.log(service)
   }, [])
 
   const isDateDisabled = (date: Date) => {
@@ -92,6 +95,7 @@ const CalendarDateRangePicker = ({ barberId, userId }: props) => {
         date: selectedDate,
         start: selectedTimeSlot.start,
         end: selectedTimeSlot.end,
+        service: service,
       })
 
       toast('Reservation created successfully')
