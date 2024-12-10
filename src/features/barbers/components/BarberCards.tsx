@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 type BarberCardsProps = {
   data: {
     id: number
-    display_name: string
+    display_name?: string
   }
 }
 

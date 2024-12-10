@@ -15,7 +15,7 @@ const BarberList = async () => {
     data?.map((barber) => ({
       ...barber.profiles,
       id: barber.user_id,
-      display_name: barber.profiles?.display_name!,
+      display_name: barber.profiles?.display_name,
     })) ?? []
 
   return (

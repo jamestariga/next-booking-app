@@ -6,6 +6,8 @@ const Home = async () => {
 
   const { data } = await supabase.auth.getUser()
 
+  if (!data) return <div>Loading...</div>
+
   return (
     <div className='w-full max-w-3xl mx-auto'>
       <BarberList />

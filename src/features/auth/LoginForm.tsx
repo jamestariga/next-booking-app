@@ -16,7 +16,7 @@ const LoginForm = () => {
     initialState
   )
 
-  useRedirectOnSuccess(state?.success!, '/account')
+  useRedirectOnSuccess(state.success, '/account')
 
   return (
     <div className='max-w-xl w-full mx-auto border-secondary px-10 rounded-lg dark:shadow-lg shadow-2xl'>

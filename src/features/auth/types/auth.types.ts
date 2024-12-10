@@ -30,7 +30,7 @@ export type IForm = {
 }
 
 export type State = {
-  success?: boolean
+  success: boolean
   error?: string
   errors?: Record<string, string[]>
   isOpen?: boolean

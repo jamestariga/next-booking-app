@@ -46,7 +46,6 @@ const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
 
   useEffect(() => {
     setSelectedDate(new Date())
-    console.log(service)
   }, [])
 
   const isDateDisabled = (date: Date) => {
