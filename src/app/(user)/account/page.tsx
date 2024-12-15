@@ -7,15 +7,10 @@ import {
 } from '@/components/ui/card'
 import Link from 'next/link'
 import { createClient } from '@/supabase/auth/server'
-
-type CardProps = {
-  title: string
-  value: string
-  link: string
-}
+import { filterAccountMenuItems, accountMenuItems } from '@/config/account-menu'
 
 const Page = async () => {
-  const getUserProfileId = async () => {
+  const getUserInfo = async () => {
     const supabase = await createClient()
 
     const { data } = await supabase.auth.getUser()
@@ -28,43 +23,24 @@ const Page = async () => {
       .eq('user_id', id)
       .single()
 
-    return profile
+    const profileId = profile?.id ?? ''
+
+    const { data: barberId } = await supabase
+      .from('barbers')
+      .select('id')
+      .eq('user_id', profileId)
+      .single()
+
+    return { profile, barberId }
   }
 
-  const profile = await getUserProfileId()
+  const { profile, barberId } = await getUserInfo()
 
-  const cardItems: CardProps[] = [
-    {
-      title: 'Personal Info',
-      value: 'Provide your personal information',
-      link: `/account/${profile?.id}`,
-    },
-    {
-      title: 'Create Service',
-      value: 'Create a new service',
-      link: '/account/create-service',
-    },
-    {
-      title: 'My Services',
-      value: 'View your created services',
-      link: `/account/dashboard/${profile?.id}`,
-    },
-    {
-      title: 'Payment Info',
-      value: 'Add payment information',
-      link: '/account/payment',
-    },
-    {
-      title: 'Settings',
-      value: 'Change your account settings',
-      link: '/account/settings',
-    },
-    {
-      title: 'Login & Security',
-      value: 'Change your password and security settings',
-      link: '/account/security',
-    },
-  ]
+  const cardItems = filterAccountMenuItems(accountMenuItems, {
+    profileId: profile?.id ?? '',
+    role: profile?.role ?? '',
+    isBarber: !!barberId,
+  })
 
   return (
     <section className='flex flex-col w-full items-center'>
