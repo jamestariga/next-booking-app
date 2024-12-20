@@ -8,7 +8,7 @@ type ServicesCardProps = {
 const ServicesCard = ({ data, handleSelection }: ServicesCardProps) => {
   return (
     <Card
-      className='w-full min-w-[200px] p-4 bg-transparent hover:bg-primary hover:scale-[1.1] transition-all duration-300'
+      className='w-full min-w-[200px] p-4 bg-transparent hover:text-background dark:hover:text-secondary-foreground hover:bg-primary hover:scale-[1.1] transition-all duration-300'
       onClick={() => handleSelection(data)}
     >
       <CardHeader>

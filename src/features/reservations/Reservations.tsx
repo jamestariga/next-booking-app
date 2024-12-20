@@ -29,7 +29,7 @@ const Reservations = ({
   }
 
   return (
-    <div className={`space-y-6 w-full ${selectedServiceDetails && 'pt-40'}`}>
+    <div className={`space-y-6 w-full ${selectedServiceDetails && 'py-40'}`}>
       <h1 className='font-bold text-xl md:text-2xl'>
         Appointment with {barberName}!
       </h1>

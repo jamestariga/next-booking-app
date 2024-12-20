@@ -41,6 +41,14 @@ const PopOver = ({ email }: { email: string }) => {
                   Account
                 </Button>
                 <Button
+                  onClick={() => handleRedirect('/reservations')}
+                  variant='none'
+                  size='noPadding'
+                  className='w-full'
+                >
+                  My Reservations
+                </Button>
+                <Button
                   onClick={signOut}
                   variant='none'
                   size='noPadding'

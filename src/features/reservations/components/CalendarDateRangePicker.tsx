@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -37,16 +37,12 @@ const generateTimeSlots = (): TimeSlot[] => {
 }
 
 const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>()
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
     null
   )
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(generateTimeSlots())
-  const [isPending, setIsPending] = useState(false)
-
-  useEffect(() => {
-    setSelectedDate(new Date())
-  }, [])
+  const [isPending, setIsPending] = useState<boolean>(false)
 
   const isDateDisabled = (date: Date) => {
     const today = new Date()

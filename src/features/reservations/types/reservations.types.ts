@@ -1,11 +1,12 @@
 export type Reservation = {
   barber_id: number
-  user_id: number
-  service: string
-  start: string
+  created_at: string
   end: string
-  price: number
+  id: number
+  service: Service
+  start: string
   status: string
+  user_id: number
 }
 
 export type Service = {
@@ -13,4 +14,5 @@ export type Service = {
   barber_id: number
   service_name: string
   price: number | null
+  created_at: string
 }
