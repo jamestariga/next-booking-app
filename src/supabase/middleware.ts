@@ -1,12 +1,13 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { Database } from '@/types/database.types'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
 
-  const supabase = createServerClient(
+  const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -31,10 +32,25 @@ export async function updateSession(request: NextRequest) {
 
   const authRoutes = ['/login', '/signup']
   const publicRoutes = [...authRoutes, '/']
+  const adminRoutes = ['/admin']
 
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('user_id', user?.id ?? '')
+    .single()
+
+  if (
+    profile?.role !== 'admin' &&
+    adminRoutes.includes(request.nextUrl.pathname)
+  ) {
+    // if user is not an admin, do not allow them to access admin routes
+    return NextResponse.redirect(new URL('/', request.url))
+  }
 
   if (user && authRoutes.includes(request.nextUrl.pathname)) {
     // if user is logged in, prevent them from accessing auth routes
