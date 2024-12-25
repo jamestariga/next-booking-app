@@ -1,6 +1,6 @@
 # Barber Booking App
 
-## TODO
+## Completed
 
 - [x] Configure supabase
 - [x] Configure tailwind
@@ -11,18 +11,24 @@
 - [x] Create a Navigation bar
 - [x] Make a user dashboard with different pages the user can access
 - [x] Create user profile page with personal info
+- [x] Create a reservation page using a stepper form to select the barber, service, date and time
+  - [x] Create a select component to select a barber
+  - [x] Create a select component to select a service
+  - [x] Create a calendar component to select a date and time
+  - [x] Create a button to submit the reservation
 
 ## In Progress
 
-- [ ] Create a reservation page
-  - [ ] Create a calendar component to select a date and time
-  - [ ] Create a select component to select a barber
-  - [ ] Create a select component to select a service
-  - [ ] Create a button to submit the reservation
+- [] Create an admin dashboard
+  - [x] Create a table to display the users
+  - [ ] Create a function to allow admins to add a user to the barbers table
+- [ ] Create a page for users to view their reservations
 
 ## To Do
 
-- [ ] Create a page for users to view their reservations
+- [ ] Create a page for barbers to view their reservations
+  - [ ] Create a table to display the reservations
+  - [ ] Create a function to allow barbers to confirm a reservation
 
 ## Project setup
 
