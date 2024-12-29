@@ -1,12 +1,22 @@
 export type Reservation = {
-  barber_id: number
-  created_at: string
-  end: string
   id: number
-  service: Service
   start: string
+  end: string
   status: string
-  user_id: number
+  service: {
+    id: number
+    price: number
+    barber_id: number
+    service_name: string
+  }
+  barber: {
+    id: number
+    profile: {
+      id: number
+      display_name: string
+    }
+  }
+  created_at: string
 }
 
 export type Service = {
@@ -15,4 +25,29 @@ export type Service = {
   service_name: string
   price: number | null
   created_at: string
+}
+
+export type ProfileAndReservations = {
+  id: number
+  display_name: string
+  reservations: Array<{
+    id: number
+    start: string
+    end: string
+    status: string
+    service: {
+      id: number
+      price: number
+      barber_id: number
+      service_name: string
+    }
+    barber: {
+      id: number
+      profile: {
+        id: number
+        display_name: string
+      }
+    }
+    created_at: string
+  }>
 }

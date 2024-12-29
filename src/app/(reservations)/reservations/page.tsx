@@ -26,6 +26,10 @@ const Reservations = async () => {
     `
     )
     .eq('user_id', userId)
+    .order('end', {
+      referencedTable: 'reservations',
+      ascending: false,
+    })
     .single<ProfileAndReservations>()
 
   console.log(profileAndReservations)
@@ -35,12 +39,12 @@ const Reservations = async () => {
   }
 
   return (
-    <div className='mx-auto'>
-      <h1>Reservations Page</h1>
+    <section className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+      <h1 className='text-2xl font-bold'>My Reservations</h1>
       {profileAndReservations && (
         <ReservationsList reservations={profileAndReservations.reservations} />
       )}
-    </div>
+    </section>
   )
 }
 
