@@ -48,7 +48,7 @@ export const accountMenuItems: AccountMenuItem[] = [
   {
     title: 'Admin Dashboard',
     value: 'View the admin dashboard',
-    link: '/admin/dashboard',
+    link: '/admin',
     roles: ['admin'],
   },
 ]
