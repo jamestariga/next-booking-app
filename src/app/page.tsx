@@ -8,11 +8,7 @@ const Home = async () => {
 
   if (!data) return <div>Loading...</div>
 
-  return (
-    <div className='w-full max-w-3xl mx-auto'>
-      <BarberList />
-    </div>
-  )
+  return <BarberList />
 }
 
 export default Home
