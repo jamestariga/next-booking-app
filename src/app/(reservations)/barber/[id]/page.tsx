@@ -16,21 +16,27 @@ const BarberReservation = async ({ params }: { params: Params }) => {
     .from('barbers')
     .select(
       `
-    user_id,
-    profiles (id, display_name)
-  `
+      *,
+      profiles (id, display_name)
+      `
     )
-    .eq('user_id', id)
+    .eq('id', id)
     .single()
 
   const barber = barberData?.profiles
+
+  if (!user || !barber) {
+    return <div>Loading Page...</div>
+  }
+
+  console.log(barberData)
 
   return (
     <div className='mx-auto max-w-fit'>
       {user && barber && (
         <Reservations
           userDetails={user}
-          barberId={id}
+          barberId={barberData.id}
           barberName={barber.display_name}
         />
       )}

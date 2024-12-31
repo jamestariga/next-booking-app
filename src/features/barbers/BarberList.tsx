@@ -7,22 +7,28 @@ const BarberList = async () => {
 
   // Join the barbers table with then profile table to get the display_name
   const { data } = await supabase.from('barbers').select(`
-    user_id,
+    *,
     profiles (id, display_name)
   `)
 
   const barbers =
     data?.map((barber) => ({
       ...barber.profiles,
-      id: barber.user_id,
+      id: barber.id,
       display_name: barber.profiles?.display_name,
     })) ?? []
 
   return (
-    <ListView
-      data={barbers}
-      renderItem={(item) => <BarberCards data={item} />}
-    />
+    <div
+      className={`w-full ${
+        data && data?.length < 3 ? 'max-w-3xl mx-auto' : ''
+      }`}
+    >
+      <ListView
+        data={barbers}
+        renderItem={(item) => <BarberCards data={item} />}
+      />
+    </div>
   )
 }
 
