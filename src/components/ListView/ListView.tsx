@@ -3,6 +3,7 @@ type ListViewProps<T> = {
   renderItem: (item: T) => React.ReactNode
   renderSkeleton?: () => React.ReactNode
   isLoading?: boolean
+  display?: 'grid' | 'flex'
 }
 
 export default function ListView<T>({
@@ -10,6 +11,7 @@ export default function ListView<T>({
   renderItem,
   renderSkeleton,
   isLoading = false,
+  display = 'grid',
 }: ListViewProps<T>) {
   const getGridTemplateColumns = (dataLength: number) => {
     if (dataLength === 1) return 'grid-cols-1 place-items-center'
@@ -37,9 +39,13 @@ export default function ListView<T>({
 
   return (
     <div
-      className={`grid ${getGridTemplateColumns(
-        data.length
-      )} place-items-center gap-8 w-full`}
+      className={`${
+        display === 'grid'
+          ? `${`grid ${getGridTemplateColumns(
+              data.length
+            )} place-items-center gap-8 w-full`}`
+          : `flex flex-col gap-4 w-full`
+      }`}
     >
       {data.map((item, index) => (
         <div key={index} className='w-full place-items-center'>

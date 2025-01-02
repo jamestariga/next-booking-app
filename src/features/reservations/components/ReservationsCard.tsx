@@ -29,7 +29,10 @@ const ReservationsCard = ({ data }: ReservationsCardProps) => {
       </CardHeader>
       <CardContent>
         <p className='text-md font-medium'>
-          {data.barber.profile.display_name}
+          {`${data.barber ? `Barber: ` : `Customer: `}`}
+          {data.barber
+            ? data.barber.profile.display_name
+            : data.customer?.display_name}
         </p>
         <p className='text-md font-medium'>
           Start: {formatDateTime(data.start)}
