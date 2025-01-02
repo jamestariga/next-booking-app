@@ -12,6 +12,18 @@ const Navbar = async () => {
 
   const userEmail = user?.email || ''
 
+  const { data: profileBarber } = await supabase
+    .from('profiles')
+    .select(
+      `id,
+      barber:barbers(id, profile:profiles(id, display_name))
+    `
+    )
+    .eq('user_id', user?.id!)
+    .single()
+
+  const isBarber = (profileBarber && profileBarber?.barber.length > 0) || false
+
   return (
     <nav className='fixed top-0 left-0 w-full z-50 bg-background border-b border-border'>
       <div className='container mx-auto flex justify-between items-center px-8'>
@@ -26,7 +38,7 @@ const Navbar = async () => {
           />
         </Link>
 
-        <PopOver email={userEmail} />
+        <PopOver email={userEmail} isBarber={isBarber} />
       </div>
     </nav>
   )

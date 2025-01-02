@@ -8,7 +8,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { signOut } from '@/server-actions/auth'
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle'
 
-const PopOver = ({ email }: { email: string }) => {
+const PopOver = ({ email, isBarber }: { email: string; isBarber: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
@@ -48,6 +48,16 @@ const PopOver = ({ email }: { email: string }) => {
                 >
                   My Reservations
                 </Button>
+                {isBarber && (
+                  <Button
+                    onClick={() => handleRedirect('/appointments')}
+                    variant='none'
+                    size='noPadding'
+                    className='w-full'
+                  >
+                    My Appointments
+                  </Button>
+                )}
                 <Button
                   onClick={signOut}
                   variant='none'
