@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, startTransition } from 'react'
 import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -6,6 +6,7 @@ import { format } from 'date-fns'
 import { createReservation } from '@/server-actions/reservations'
 import { toast } from 'sonner'
 import { Service } from '../types/reservations.types'
+import { useRouter } from 'next/navigation'
 
 type TimeSlot = {
   start: string
@@ -44,6 +45,8 @@ const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(generateTimeSlots())
   const [isPending, setIsPending] = useState<boolean>(false)
 
+  const router = useRouter()
+
   const isDateDisabled = (date: Date) => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
@@ -73,6 +76,7 @@ const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
     }
 
     setIsPending(true)
+
     try {
       // Combine date and time for start/end times
       const [startHour] = selectedTimeSlot.start.split(':')
@@ -86,7 +90,7 @@ const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
 
       await createReservation({
         userId: userId!,
-        barberId,
+        barberId: barberId,
         date: selectedDate,
         start: selectedTimeSlot.start,
         end: selectedTimeSlot.end,
@@ -95,14 +99,15 @@ const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
 
       toast('Reservation created successfully')
 
-      // Reset selections
-      setSelectedDate(undefined)
-      setSelectedTimeSlot(null)
+      startTransition(() => {
+        setSelectedDate(undefined)
+        setSelectedTimeSlot(null)
+        router.push(`/reservations`)
+      })
     } catch (error) {
       console.log(error)
       toast.error('Failed to create reservation')
     } finally {
-      // TODO: Add router.push to redirect to the reservations page when done creating the user reservations page
       setIsPending(false)
     }
   }
