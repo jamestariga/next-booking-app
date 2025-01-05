@@ -39,7 +39,13 @@ const Reservations = async () => {
   }
 
   return (
-    <section className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+    <section
+      className={`max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto ${
+        profileAndReservations &&
+        profileAndReservations.reservations.length > 2 &&
+        'py-40'
+      }`}
+    >
       <h1 className='text-2xl font-bold'>My Reservations</h1>
       {profileAndReservations && (
         <ReservationsList reservations={profileAndReservations.reservations} />
