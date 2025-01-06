@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Card,
   CardContent,
@@ -7,12 +9,15 @@ import {
 } from '@/components/ui/card'
 import { Reservation } from '../types/reservations.types'
 import { format } from 'date-fns'
+import { useRouter } from 'next/navigation'
 
 type ReservationsCardProps = {
   data: Reservation
 }
 
 const ReservationsCard = ({ data }: ReservationsCardProps) => {
+  const router = useRouter()
+
   const formatDateTime = (dateString: string) => {
     // Add 8 hours to convert from PST to UTC display
     const date = new Date(dateString)
@@ -20,8 +25,19 @@ const ReservationsCard = ({ data }: ReservationsCardProps) => {
     return format(date, "MMM d, yyyy 'at' h:mm a 'PST'")
   }
 
+  const handleRedirect = (pathName: string) => {
+    router.push(pathName, { scroll: false })
+  }
+
   return (
-    <Card className='w-full min-w-[200px] p-4 bg-transparent hover:text-background dark:hover:text-secondary-foreground hover:bg-primary hover:scale-[1.02] transition-all duration-300'>
+    <Card
+      className='w-full min-w-[200px] p-4 bg-transparent hover:text-background dark:hover:text-secondary-foreground hover:bg-primary hover:scale-[1.02] transition-all duration-300'
+      onClick={() =>
+        handleRedirect(
+          `/${data.customer ? 'appointments' : 'reservations'}/${data.id}`
+        )
+      }
+    >
       <CardHeader>
         <CardTitle className='text-lg font-bold'>
           {data.service.service_name}

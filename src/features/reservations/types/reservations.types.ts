@@ -55,3 +55,19 @@ export type ProfileAndReservations = {
     created_at: string
   }>
 }
+
+export type Appointment = {
+  barber_id: number
+  created_at: string
+  end: string
+  id: number
+  service: {
+    id: number
+    price: number
+    barber_id: number
+    service_name: string
+  }
+  start: string
+  status: string
+  user_id: number
+}

@@ -28,7 +28,11 @@ const Modal = ({
   const router = useRouter()
 
   const handleOpenChange = () => {
-    router.replace('/')
+    if (title === 'Login' || title === 'Sign Up') {
+      router.push('/')
+    } else {
+      router.back()
+    }
   }
 
   return (
