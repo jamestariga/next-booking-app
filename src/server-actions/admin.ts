@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache'
 export async function addUserToBarber(userId: number) {
   const supabase = await createClient()
 
-  const { data, error } = await supabase.from('barbers').insert({
+  const { error } = await supabase.from('barbers').insert({
     user_id: userId,
   })
 
@@ -22,7 +22,7 @@ export async function addUserToBarber(userId: number) {
 export async function removeUserFromBarber(userId: number) {
   const supabase = await createClient()
 
-  const { data, error } = await supabase.from('barbers').delete().match({
+  const { error } = await supabase.from('barbers').delete().match({
     user_id: userId,
   })
 

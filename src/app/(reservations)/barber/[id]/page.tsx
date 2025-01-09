@@ -29,8 +29,6 @@ const BarberReservation = async ({ params }: { params: Params }) => {
     return <div>Loading Page...</div>
   }
 
-  console.log(barberData)
-
   return (
     <div className='mx-auto max-w-fit'>
       {user && barber && (

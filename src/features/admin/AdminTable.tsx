@@ -43,6 +43,7 @@ const AdminTable = ({ usersWithBarberStatus }: AdminTableProps) => {
           toast(`${userName} removed as a barber`)
         }
       } catch (error) {
+        console.error('Error adding user to barber:', error)
         toast.error('An error occurred while updating the user status')
       }
     }
