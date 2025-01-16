@@ -19,7 +19,7 @@ const Navbar = async () => {
       barber:barbers(id, profile:profiles(id, display_name))
     `
     )
-    .eq('user_id', user?.id!)
+    .eq('user_id', user?.id ?? '')
     .single()
 
   const isBarber = (profileBarber && profileBarber?.barber.length > 0) || false
