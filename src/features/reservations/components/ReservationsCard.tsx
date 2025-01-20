@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Reservation } from '../types/reservations.types'
-import { format } from 'date-fns'
+import { formatDateTime } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 
 type ReservationsCardProps = {
@@ -17,13 +17,6 @@ type ReservationsCardProps = {
 
 const ReservationsCard = ({ data }: ReservationsCardProps) => {
   const router = useRouter()
-
-  const formatDateTime = (dateString: string) => {
-    // Add 8 hours to convert from PST to UTC display
-    const date = new Date(dateString)
-    date.setTime(date.getTime() + 8 * 60 * 60 * 1000) // Add 8 hours
-    return format(date, "MMM d, yyyy 'at' h:mm a 'PST'")
-  }
 
   const handleRedirect = (pathName: string) => {
     router.push(pathName, { scroll: false })
