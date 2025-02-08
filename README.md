@@ -30,6 +30,11 @@
 
 ## To Do
 
+## Bugs
+
+- [ ] When a user navigates to /account/[id] even if they are not the owner of the profile, they are redirected to the dashboard
+  - [ ] Properly handle this by checking if the user is the owner of the profile before rendering the page
+
 ## Project setup
 
 - Create a `.env.local` file and add the following variables
