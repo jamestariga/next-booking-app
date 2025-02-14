@@ -20,7 +20,7 @@ const Page = () => {
   const description = "Don't have an account? "
   const url = 'signup'
 
-  useRedirectOnSuccess(state?.success, '/account')
+  useRedirectOnSuccess(state?.success, '/account', 'Login successful!')
 
   return (
     <Modal

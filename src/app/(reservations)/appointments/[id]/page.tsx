@@ -16,6 +16,12 @@ const AppointmentPage = async ({ params }: { params: Params }) => {
     .eq('id', id)
     .single<Appointment>()
 
+  if (!appointment) {
+    return <div>Empty</div>
+  }
+
+  console.log(appointment)
+
   return (
     <div className='max-w-3xl mx-auto space-y-4'>
       <h1 className='text-2xl font-bold'>Appointment</h1>
@@ -24,6 +30,8 @@ const AppointmentPage = async ({ params }: { params: Params }) => {
           <CardTitle>{appointment?.service.service_name}</CardTitle>
         </CardHeader>
         <CardContent>
+          <p>{appointment?.user_id}</p>
+          <p>{appointment?.barber_id}</p>
           <p>Date and Time: {formatDateTime(appointment?.start ?? '')}</p>
           <p>Price: {appointment?.service.price}</p>
           <div className='flex w-full gap-2 py-4 justify-between'>

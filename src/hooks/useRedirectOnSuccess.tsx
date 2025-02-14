@@ -4,15 +4,19 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-const useRedirectOnSuccess = (success: boolean, redirectPath = '/') => {
+const useRedirectOnSuccess = (
+  success: boolean,
+  redirectPath = '/',
+  message: string
+) => {
   const router = useRouter()
 
   useEffect(() => {
     if (success) {
       router.push(redirectPath)
-      toast('Login successful!')
+      toast(message)
     }
-  }, [success, router, redirectPath])
+  }, [success, router, redirectPath, message])
 }
 
 export default useRedirectOnSuccess

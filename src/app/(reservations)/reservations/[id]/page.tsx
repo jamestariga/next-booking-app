@@ -14,6 +14,10 @@ const ReservationPage = async ({ params }: { params: Params }) => {
     .eq('id', id)
     .single<Appointment>()
 
+  if (!appointment) {
+    return <div>Empty</div>
+  }
+
   // TODO - Add a function that confirms the status of the appointment
 
   return (
