@@ -21,19 +21,27 @@
   - [x] Create a function to allow admins to add a user to the barbers table
 - [x] Create a page for users to view their reservations
 - [x] Create a reusable modal to display the reservation details
+- [x] Create a page for barbers to view their reservations
+  - [x] Create a list to display the reservations
+  - [x] Create a function to allow barbers to update the status of a reservation
 
 ## In Progress
 
-- [ ] Create a page for barbers to view their reservations
-  - [x] Create a list to display the reservations
-  - [ ] Create a function to allow barbers to update the status of a reservation
-
 ## To Do
 
-## Bugs
+- [ ] Move the schedule to the backend rather than being hardcoded
+  - [ ] Create a table to store the schedule
+  - [ ] Create a function to allow barbers to add a custom schedule
+
+## Fixed Bugs (Breaking Changes and Major issues)
 
 - [x] When a user navigates to /account/[id] even if they are not the owner of the profile, they are redirected to the dashboard
   - [x] Properly handle this by checking if the user is the owner of the profile before rendering the page
+
+## Bugs
+
+- [ ] The useActionState hook does not allow for the state to reset unless the user refreshes the page
+  - [ ] The reusable modal is not opening when the barber updates the status of a reservation
 
 ## Project setup
 
