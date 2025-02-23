@@ -33,5 +33,5 @@ export type State = {
   success: boolean
   error?: string
   errors?: Record<string, string[]>
-  isOpen?: boolean
+  isOpen: boolean
 }
