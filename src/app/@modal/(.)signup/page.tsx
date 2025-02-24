@@ -1,11 +1,11 @@
 'use client'
 
 import { useActionState } from 'react'
+import { useRedirectOnSuccess } from '@/hooks/useRedirectOnSuccess'
 import Modal from '@/components/Modal/Modal'
 import AuthForm from '@/features/auth/component/AuthForm'
 import { signup } from '@/server-actions/auth'
 import { State } from '@/features/auth/types/auth.types'
-import useRedirectOnSuccess from '@/hooks/useRedirectOnSuccess'
 
 const initialState: State = {
   isOpen: true,

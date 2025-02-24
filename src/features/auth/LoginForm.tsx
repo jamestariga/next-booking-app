@@ -1,10 +1,10 @@
 'use client'
 
 import { useActionState } from 'react'
+import { useRedirectOnSuccess } from '@/hooks/useRedirectOnSuccess'
 import { login } from '@/server-actions/auth'
 import AuthForm from './component/AuthForm'
 import { State } from './types/auth.types'
-import useRedirectOnSuccess from '@/hooks/useRedirectOnSuccess'
 
 const initialState: State = {
   success: false,

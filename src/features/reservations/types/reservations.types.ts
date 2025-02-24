@@ -71,3 +71,8 @@ export type Appointment = {
   status: string
   user_id: number
 }
+
+export type AppointmentStatus = {
+  id: number
+  status: string
+}

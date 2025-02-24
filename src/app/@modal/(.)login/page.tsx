@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
-import useRedirectOnSuccess from '@/hooks/useRedirectOnSuccess'
+import { useRedirectOnSuccess } from '@/hooks/useRedirectOnSuccess'
 import Modal from '@/components/Modal/Modal'
 import AuthForm from '@/features/auth/component/AuthForm'
 import { login } from '@/server-actions/auth'

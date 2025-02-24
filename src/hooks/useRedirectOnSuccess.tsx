@@ -4,19 +4,31 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-const useRedirectOnSuccess = (
+export function useRedirectOnSuccess(
   success: boolean,
   redirectPath = '/',
-  message: string
-) => {
+  message: string,
+  refresh: boolean = false,
+  reset?: () => void
+) {
   const router = useRouter()
 
   useEffect(() => {
-    if (success) {
+    /* Use by the auth routes, no need to reset 
+    the state since the redirect path will change */
+    if (success && !reset) {
       router.push(redirectPath)
       toast(message)
     }
-  }, [success, router, redirectPath, message])
-}
 
-export default useRedirectOnSuccess
+    /* Use by components that need to redirect on 
+    success and reset the state */
+    if (success && refresh && reset) {
+      router.push(redirectPath)
+      toast(message)
+      setTimeout(() => {
+        reset()
+      }, 1000)
+    }
+  }, [success, router, redirectPath, message, refresh, reset])
+}
