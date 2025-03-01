@@ -158,6 +158,44 @@ export type Database = {
           },
         ]
       }
+      schedule: {
+        Row: {
+          barber_id: number
+          created_at: string
+          day: number
+          end_time: string
+          id: number
+          is_active: boolean
+          start_time: string
+        }
+        Insert: {
+          barber_id: number
+          created_at?: string
+          day: number
+          end_time: string
+          id?: number
+          is_active: boolean
+          start_time: string
+        }
+        Update: {
+          barber_id?: number
+          created_at?: string
+          day?: number
+          end_time?: string
+          id?: number
+          is_active?: boolean
+          start_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "schedule_barber_id_fkey"
+            columns: ["barber_id"]
+            isOneToOne: false
+            referencedRelation: "barbers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       services: {
         Row: {
           barber_id: number
