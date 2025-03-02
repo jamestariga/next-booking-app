@@ -45,12 +45,13 @@
 ## Fixed Bugs (Breaking Changes and Major issues)
 
 - [x] When a user navigates to /account/[id] even if they are not the owner of the profile, they are redirected to the dashboard
+
   - [x] Properly handle this by checking if the user is the owner of the profile before rendering the page
 
-## Bugs
+- [x] The useActionState hook does not allow for the state to reset unless the user refreshes the page (Fix was create a custom useActionState hook with a reset function)
+  - [x] The reusable modal is not opening when the barber updates the status of a reservation
 
-- [ ] The useActionState hook does not allow for the state to reset unless the user refreshes the page
-  - [ ] The reusable modal is not opening when the barber updates the status of a reservation
+## Bugs
 
 ## Project setup
 

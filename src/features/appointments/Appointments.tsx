@@ -1,6 +1,8 @@
 'use client'
 
-import { useActionState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useActionState } from '@/hooks/useActionState'
+import { useRedirectOnSuccess } from '@/hooks/useRedirectOnSuccess'
 import { updateAppointment } from '@/server-actions/reservations'
 import Modal from '@/components/Modal/Modal'
 import {
@@ -13,7 +15,6 @@ import {
 } from '@/features/appointments/types/appointments.types'
 import AppointmentForm from './components/AppointmentForm'
 import { State } from '../auth/types/auth.types'
-import useRedirectOnSuccess from '@/hooks/useRedirectOnSuccess'
 
 type Props = {
   type: 'appointment' | 'reservation'
@@ -28,10 +29,13 @@ const initialState: State = {
 }
 
 const Appointments = ({ type, data, barberData, clientData }: Props) => {
-  const [state, formAction] = useActionState<State, AppointmentStatus>(
+  // Custom useActionState hook to handle the state and reset the state
+  const [state, formAction, , reset] = useActionState<State, AppointmentStatus>(
     updateAppointment,
     initialState
   )
+  const pathname = usePathname()
+
   const displayType = type === 'appointment' ? 'Customer' : 'Barber'
   const displayName =
     type === 'appointment'
@@ -40,18 +44,21 @@ const Appointments = ({ type, data, barberData, clientData }: Props) => {
 
   useRedirectOnSuccess(
     state?.success,
-    `/appointments`,
+    `${type === 'appointment' ? '/appointments' : '/reservations'}`,
     'Updated Successfully!',
-    true
+    true,
+    reset
   )
-
-  console.log(state)
 
   return (
     <Modal
-      title='Appointment'
+      title={`${type === 'appointment' ? 'Appointment' : 'Reservation'}`}
       description='Book your next visit'
-      isOpen={state.isOpen ?? true}
+      isOpen={
+        pathname === '/appointments' || pathname === '/reservations'
+          ? false
+          : state.isOpen ?? true
+      }
       link='/'
       linkTitle='View Appointments'
     >
