@@ -40,6 +40,7 @@ const Page = async () => {
     profileId: profile?.id ?? '',
     role: profile?.role ?? '',
     isBarber: !!barberId,
+    barberId: barberId?.id ?? '',
   })
 
   return (

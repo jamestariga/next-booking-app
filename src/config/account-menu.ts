@@ -14,6 +14,13 @@ export const accountMenuItems: AccountMenuItem[] = [
     roles: ['user', 'admin'],
   },
   {
+    title: 'My Schedule',
+    value: 'View your schedule',
+    link: '/account/schedule/[barberId]',
+    roles: ['user', 'admin'],
+    barberOnly: true,
+  },
+  {
     title: 'Create Service',
     value: 'Create a new service',
     link: '/account/create-service',
@@ -23,7 +30,7 @@ export const accountMenuItems: AccountMenuItem[] = [
   {
     title: 'My Services',
     value: 'View your created services',
-    link: '/account/dashboard/[profileId]',
+    link: '/account/dashboard/[barberId]',
     roles: ['user', 'admin'],
     barberOnly: true,
   },
@@ -60,6 +67,7 @@ export function filterAccountMenuItems(
     profileId: number | ''
     role: string
     isBarber: boolean
+    barberId: number | ''
   }
 ) {
   return menuItems
@@ -75,6 +83,8 @@ export function filterAccountMenuItems(
     })
     .map((item) => ({
       ...item,
-      link: item.link.replace('[profileId]', user.profileId.toLocaleString()),
+      link: item.link
+        .replace('[profileId]', user.profileId.toLocaleString())
+        .replace('[barberId]', user.barberId.toLocaleString()),
     }))
 }
