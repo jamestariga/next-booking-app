@@ -15,7 +15,7 @@ const Page = async ({ params }: { params: Params }) => {
 
   return (
     <section className='flex flex-col space-y-8 w-full'>
-      <div className='max-w-xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+      <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
         <h1 className='text-3xl font-bold'>Schedule</h1>
         <p className='text-lg'>{schedule.map((item) => item.day)}</p>
       </div>

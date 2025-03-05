@@ -31,8 +31,13 @@
 
 - [ ] Move the schedule to the backend rather than being hardcoded
 
-  - [ ] Create a table to store the schedule
-  - [ ] Create a function to allow barbers to add a custom schedule
+  - [x] Create a table to store the schedule
+  - [ ] Create CRUD operations to allow barbers to add/delete/edit custom schedules
+
+- [ ] Move the services to the backend rather than being hardcoded
+
+  - [x] Create a table to store the services
+  - [ ] Create CRUD operations to allow barbers to add/delete/edit custom services
 
 - [ ] Create a tab component to display the different status of a reservation
   - [ ] Tab supports the following statuses
