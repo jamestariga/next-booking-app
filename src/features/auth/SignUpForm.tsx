@@ -2,7 +2,7 @@
 
 import { useRedirectOnSuccess } from '@/hooks/useRedirectOnSuccess'
 import { useActionState } from 'react'
-import { signup } from '@/server-actions/auth'
+import { signup } from '@/server-functions/auth'
 import AuthForm from './component/AuthForm'
 import { State } from './types/auth.types'
 

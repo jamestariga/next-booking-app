@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { User } from '@/features/admin/types/admin.types'
-import { addUserToBarber, removeUserFromBarber } from '@/server-actions/admin'
+import { addUserToBarber, removeUserFromBarber } from '@/server-functions/admin'
 import {
   Table,
   TableBody,

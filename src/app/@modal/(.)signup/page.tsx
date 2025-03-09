@@ -4,7 +4,7 @@ import { useActionState } from 'react'
 import { useRedirectOnSuccess } from '@/hooks/useRedirectOnSuccess'
 import Modal from '@/components/Modal/Modal'
 import AuthForm from '@/features/auth/component/AuthForm'
-import { signup } from '@/server-actions/auth'
+import { signup } from '@/server-functions/auth'
 import { State } from '@/features/auth/types/auth.types'
 
 const initialState: State = {

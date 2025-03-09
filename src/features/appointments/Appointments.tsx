@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { useActionState } from '@/hooks/useActionState'
 import { useRedirectOnSuccess } from '@/hooks/useRedirectOnSuccess'
-import { updateAppointment } from '@/server-actions/reservations'
+import { updateAppointment } from '@/server-functions/reservations'
 import Modal from '@/components/Modal/Modal'
 import {
   Appointment,

@@ -5,7 +5,7 @@ import { Button } from '../ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { useRouter, usePathname } from 'next/navigation'
-import { signOut } from '@/server-actions/auth'
+import { signOut } from '@/server-functions/auth'
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle'
 
 const PopOver = ({ email, isBarber }: { email: string; isBarber: boolean }) => {

@@ -9,7 +9,7 @@ import {
   DisplayNameFields,
 } from './schema/schema'
 import UserSheet from './components/UserSheet'
-import { updateUserDetails } from '@/server-actions/user'
+import { updateUserDetails } from '@/server-functions/user'
 import { FieldConfig, FieldName, UserInfoFields } from './types/form.types'
 
 type UserFormProps = {
