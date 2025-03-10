@@ -1,26 +1,43 @@
-import { createClient } from '@/supabase/auth/server'
+import { notFound } from 'next/navigation'
+import Schedule from '@/features/schedule/Schedule'
+import { getBarberSchedule } from '@/server-functions/schedule'
 
 type Params = Promise<{ id: number }>
 
-const Page = async ({ params }: { params: Params }) => {
+export default async function SchedulePage({ params }: { params: Params }) {
   const { id } = await params
 
-  const supabase = await createClient()
-  const { data } = await supabase
-    .from('schedule')
-    .select('*')
-    .eq('barber_id', id)
+  if (isNaN(id)) {
+    notFound()
+  }
 
-  const schedule = data ?? []
+  try {
+    const schedules = await getBarberSchedule(id)
 
-  return (
-    <section className='flex flex-col space-y-8 w-full'>
-      <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
-        <h1 className='text-3xl font-bold'>Schedule</h1>
-        <p className='text-lg'>{schedule.map((item) => item.day)}</p>
-      </div>
-    </section>
-  )
+    return (
+      <section className='flex flex-col space-y-8 w-full'>
+        <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+          <h1 className='text-3xl font-bold'>Barber Schedule</h1>
+          <p className='text-muted-foreground'>
+            Manage your weekly working hours. You can add, edit, or remove
+            schedules for each day of the week.
+          </p>
+
+          <Schedule schedules={schedules} barberId={id} />
+        </div>
+      </section>
+    )
+  } catch (error) {
+    console.error('Error fetching schedule:', error)
+    return (
+      <section className='flex flex-col space-y-8 w-full'>
+        <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+          <h1 className='text-3xl font-bold'>Barber Schedule</h1>
+          <p className='text-red-500'>
+            Failed to load schedule. Please try again later.
+          </p>
+        </div>
+      </section>
+    )
+  }
 }
-
-export default Page
