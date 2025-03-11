@@ -46,8 +46,8 @@ const Page = async () => {
   return (
     <section className='flex flex-col w-full items-center'>
       <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
-        <h1 className='text-2xl font-bold'>Account</h1>
-        <p className='text-lg text-gray-500'>
+        <h1 className='text-3xl font-bold'>Account</h1>
+        <p className='text-muted-foreground'>
           Welcome, {profile?.display_name}
         </p>
         <div className='grid md:grid-cols-2 tablet:grid-cols-3 gap-4 mt-4'>

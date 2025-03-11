@@ -36,7 +36,7 @@ const Appointments = ({ type, data, barberData, clientData }: Props) => {
   )
   const pathname = usePathname()
 
-  const displayType = type === 'appointment' ? 'Customer' : 'Barber'
+  const displayType = type === 'reservation' ? 'Customer' : 'Barber'
   const displayName =
     type === 'appointment'
       ? clientData?.display_name

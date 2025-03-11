@@ -1,59 +1,54 @@
-import { useState, startTransition } from 'react'
+import { useState, startTransition, useEffect } from 'react'
 import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { createReservation } from '@/server-functions/reservations'
 import { toast } from 'sonner'
-import { Service } from '../types/reservations.types'
+import { Service, TimeSlot } from '../types/reservations.types'
 import { useRouter } from 'next/navigation'
-
-type TimeSlot = {
-  start: string
-  end: string
-  display: string
-  active: boolean
-}
+import { Schedule } from '@/server-functions/schedule'
+import { generateTimeSlots } from '../utils/helpers'
 
 type props = {
   barberId: number
   userId?: number
   service: Service
+  schedule: Schedule[]
 }
 
-const generateTimeSlots = (): TimeSlot[] => {
-  const slots: TimeSlot[] = []
-  for (let hour = 9; hour < 20; hour++) {
-    const ampm = hour >= 12 ? 'PM' : 'AM'
-    const displayHour = hour > 12 ? hour - 12 : hour
-
-    slots.push({
-      start: `${hour}:00`,
-      end: `${hour + 1}:00`,
-      display: `${displayHour}:00 ${ampm}`,
-      active: false,
-    })
-  }
-  return slots
-}
-
-const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
+const CalendarDateRangePicker = ({
+  barberId,
+  userId,
+  service,
+  schedule,
+}: props) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
     null
   )
-  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(generateTimeSlots())
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([])
   const [isPending, setIsPending] = useState<boolean>(false)
 
   const router = useRouter()
 
+  // Update time slots when date changes
+  useEffect(() => {
+    setTimeSlots(generateTimeSlots(selectedDate, schedule))
+    setSelectedTimeSlot(null)
+  }, [selectedDate, schedule])
+
   const isDateDisabled = (date: Date) => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
-    return date < today
+
+    // Check if the barber works on this day
+    const dayOfWeek = date.getDay()
+    const hasSchedule = schedule.some((s) => s.day === dayOfWeek && s.is_active)
+
+    return date < today || !hasSchedule
   }
 
-  // Generate time slots from 9 AM to 5 PM
   const handleTimeSlotSelect = (slot: TimeSlot) => {
     setTimeSlots((prevSlots) =>
       prevSlots.map((s) =>
@@ -131,7 +126,7 @@ const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
         />
       </div>
 
-      {selectedDate && (
+      {selectedDate && timeSlots.length > 0 && (
         <div>
           <h3 className='mb-4 text-lg font-medium'>
             Available Times for {format(selectedDate, 'MMMM d, yyyy')}
@@ -151,6 +146,14 @@ const CalendarDateRangePicker = ({ barberId, userId, service }: props) => {
               </Button>
             ))}
           </div>
+        </div>
+      )}
+
+      {selectedDate && timeSlots.length === 0 && (
+        <div className='p-4 border rounded-md bg-muted'>
+          <p className='text-center text-muted-foreground'>
+            No available time slots for this date.
+          </p>
         </div>
       )}
 

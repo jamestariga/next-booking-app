@@ -17,7 +17,8 @@ const BarberReservation = async ({ params }: { params: Params }) => {
     .select(
       `
       *,
-      profiles (id, display_name)
+      profiles (id, display_name),
+      schedule(*)
       `
     )
     .eq('id', id)
@@ -36,6 +37,7 @@ const BarberReservation = async ({ params }: { params: Params }) => {
           userDetails={user}
           barberId={barberData.id}
           barberName={barber.display_name}
+          schedule={barberData.schedule}
         />
       )}
     </div>

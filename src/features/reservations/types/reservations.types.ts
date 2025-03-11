@@ -76,3 +76,10 @@ export type AppointmentStatus = {
   id: number
   status: string
 }
+
+export type TimeSlot = {
+  start: string
+  end: string
+  display: string
+  active: boolean
+}
