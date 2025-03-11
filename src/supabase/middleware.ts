@@ -58,7 +58,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
-  // If there is no authenticated user and the route isn’t public, redirect to login.
+  // If there is no authenticated user and the route isn't public, redirect to login.
   if (!user && !publicRoutes.includes(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
@@ -78,6 +78,49 @@ export async function updateSession(request: NextRequest) {
         return NextResponse.redirect(
           new URL(`/account/${profile?.id}`, request.url)
         )
+      }
+    }
+  }
+
+  // **Protect /account/schedule/[barber_id] routes:**
+  if (user && request.nextUrl.pathname.startsWith('/account/schedule/')) {
+    // Extract the barber_id from the pathname
+    const match = request.nextUrl.pathname.match(/^\/account\/schedule\/(\d+)$/)
+    if (match) {
+      const requestedBarberId = Number(match[1])
+
+      // Check if the user is associated with this barber_id
+      const { data: barber } = profile?.id
+        ? await supabase
+            .from('barbers')
+            .select('*')
+            .eq('id', requestedBarberId)
+            .eq('user_id', profile.id)
+            .single()
+        : { data: null }
+
+      // If the user is not associated with this barber_id and is not an admin, redirect
+      if (!barber && profile?.role !== 'admin') {
+        // Fetch the barber associated with the user (if any)
+        const { data: userBarber } = profile?.id
+          ? await supabase
+              .from('barbers')
+              .select('id')
+              .eq('user_id', profile.id)
+              .single()
+          : { data: null }
+
+        if (userBarber) {
+          // Redirect to the user's own barber schedule
+          return NextResponse.redirect(
+            new URL(`/account/schedule/${userBarber.id}`, request.url)
+          )
+        } else {
+          // If the user is not a barber, redirect to their account page
+          return NextResponse.redirect(
+            new URL(`/account/${profile?.id}`, request.url)
+          )
+        }
       }
     }
   }
