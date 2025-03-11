@@ -29,8 +29,8 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null)
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
-  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false)
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState<boolean>(false)
 
   // Sort schedules by day of week
   const sortedSchedules = [...schedules].sort((a, b) => a.day - b.day)

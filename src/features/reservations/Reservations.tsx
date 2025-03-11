@@ -6,17 +6,20 @@ import { User } from '@supabase/supabase-js'
 import CalendarDateRangePicker from './components/CalendarDateRangePicker'
 import ServiceSelection from './components/ServiceSelection'
 import { Service } from './types/reservations.types'
+import { Schedule } from '@/server-functions/schedule'
 
 type ReservationsProps = {
   userDetails: User
   barberId: number
   barberName: string
+  schedule: Schedule[]
 }
 
 const Reservations = ({
   userDetails,
   barberId,
   barberName,
+  schedule,
 }: ReservationsProps) => {
   const { id } = userDetails
   const userData = useGetUserById(id)
@@ -41,6 +44,7 @@ const Reservations = ({
           barberId={barberId}
           userId={userData?.id}
           service={selectedServiceDetails}
+          schedule={schedule}
         />
       )}
     </div>

@@ -18,8 +18,6 @@ const ReservationPage = async ({ params }: { params: Params }) => {
     return <div>Empty</div>
   }
 
-  // TODO - Add a function that confirms the status of the appointment
-
   return (
     <div className='max-w-3xl mx-auto space-y-4'>
       <h1 className='text-2xl font-bold'>Reservations</h1>
