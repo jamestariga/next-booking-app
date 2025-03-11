@@ -27,7 +27,7 @@ const AppointmentForm = ({
   action,
 }: Props) => {
   const [currentStatus, setCurrentStatus] = useState<string>(status)
-  const [editable, setEditable] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<boolean>(false)
 
   const onSelectStatus = (value: string) => {
     setCurrentStatus(value)
@@ -36,20 +36,22 @@ const AppointmentForm = ({
   const updateAndClose = (id: number, newStatus: string) => {
     startTransition(() => {
       action({ id, status: newStatus })
-      setEditable(false)
+      setIsEditing(false)
     })
   }
 
   return (
     <>
-      {!editable ? (
+      {!isEditing ? (
         <div className='flex flex-col w-full gap-2 py-4 justify-between'>
           <div>
             <p>Service: {service}</p>
             <p>{`${type}: ${displayName}`}</p>
             <p>Status: {currentStatus}</p>
           </div>
-          <Button onClick={() => setEditable(true)}>Update Status</Button>
+          {type === 'Barber' && (
+            <Button onClick={() => setIsEditing(true)}>Update Status</Button>
+          )}
         </div>
       ) : (
         <div className='flex flex-col w-full gap-2 py-4'>
@@ -68,7 +70,7 @@ const AppointmentForm = ({
             <Button onClick={() => updateAndClose(id, currentStatus)}>
               Update Status
             </Button>
-            <Button onClick={() => setEditable(false)} variant='destructive'>
+            <Button onClick={() => setIsEditing(false)} variant='destructive'>
               Cancel
             </Button>
           </div>
