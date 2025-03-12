@@ -24,28 +24,32 @@
 - [x] Create a page for barbers to view their reservations
   - [x] Create a list to display the reservations
   - [x] Create a function to allow barbers to update the status of a reservation
+- [x] Move the schedule to the backend rather than being hardcoded
+  - [x] Create a table to store the schedule
+  - [x] Create CRUD operations to allow barbers to add/delete/edit custom schedules
 
 ## In Progress
-
-## To Do
-
-- [ ] Move the schedule to the backend rather than being hardcoded
-
-  - [x] Create a table to store the schedule
-  - [ ] Create CRUD operations to allow barbers to add/delete/edit custom schedules
 
 - [ ] Move the services to the backend rather than being hardcoded
 
   - [x] Create a table to store the services
   - [ ] Create CRUD operations to allow barbers to add/delete/edit custom services
 
+## To Do
+
 - [ ] Create a tab component to display the different status of a reservation
+
   - [ ] Tab supports the following statuses
     - [ ] Pending
     - [ ] Confirmed
     - [ ] Cancelled
     - [ ] Completed
     - [ ] All
+
+- [ ] Create a page for barber to upload their profile picture
+
+  - [ ] Create a form to upload the profile picture
+  - [ ] Use supabase storage to store the profile picture
 
 ## Fixed Bugs (Breaking Changes and Major issues)
 
