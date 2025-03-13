@@ -199,23 +199,26 @@ export type Database = {
       services: {
         Row: {
           barber_id: number
-          created_at: string
+          created_at: string | null
           id: number
-          price: number | null
+          is_active: boolean
+          price: number
           service_name: string
         }
         Insert: {
           barber_id: number
-          created_at?: string
+          created_at?: string | null
           id?: number
-          price?: number | null
+          is_active: boolean
+          price: number
           service_name: string
         }
         Update: {
           barber_id?: number
-          created_at?: string
+          created_at?: string | null
           id?: number
-          price?: number | null
+          is_active?: boolean
+          price?: number
           service_name?: string
         }
         Relationships: [
