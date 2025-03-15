@@ -37,6 +37,10 @@
 
 ## To Do
 
+- [ ] Upgrade Tailwind to v4
+
+  - [ ] Regression Test
+
 - [ ] Create a tab component to display the different status of a reservation
 
   - [ ] Tab supports the following statuses
