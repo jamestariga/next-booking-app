@@ -19,7 +19,7 @@ const Page = async ({ params }: { params: Params }) => {
 
   return (
     <section className='flex flex-col space-y-8 w-full'>
-      <div className='max-w-xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+      <div className='max-w-xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
         <h1 className='text-3xl font-bold'>Account</h1>
         <p className='text-lg'>Welcome, {data?.display_name}!</p>
         <UserForm

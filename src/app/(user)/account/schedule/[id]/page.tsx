@@ -16,7 +16,7 @@ export default async function SchedulePage({ params }: { params: Params }) {
 
     return (
       <section className='flex flex-col space-y-8 w-full'>
-        <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+        <div className='max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
           <h1 className='text-3xl font-bold'>Barber Schedule</h1>
           <p className='text-muted-foreground'>
             Manage your weekly working hours. You can add, edit, or remove
@@ -31,7 +31,7 @@ export default async function SchedulePage({ params }: { params: Params }) {
     console.error('Error fetching schedule:', error)
     return (
       <section className='flex flex-col space-y-8 w-full'>
-        <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+        <div className='max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
           <h1 className='text-3xl font-bold'>Barber Schedule</h1>
           <p className='text-red-500'>
             Failed to load schedule. Please try again later.

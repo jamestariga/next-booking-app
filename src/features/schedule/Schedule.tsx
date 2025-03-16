@@ -8,7 +8,7 @@ type ScheduleProps = {
 
 const Schedule = ({ schedules, barberId }: ScheduleProps) => {
   return (
-    <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+    <div className='max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
       <ScheduleList schedules={schedules} barberId={barberId} />
     </div>
   )

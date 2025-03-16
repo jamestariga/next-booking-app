@@ -40,7 +40,7 @@ const Reservations = async () => {
 
   return (
     <section
-      className={`max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto ${
+      className={`max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto ${
         profileAndReservations &&
         profileAndReservations.reservations.length > 2 &&
         'py-40'
