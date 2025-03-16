@@ -140,7 +140,7 @@ const AuthForm = ({ type, isModal, error, action }: IForm) => {
         <Button
           type='submit'
           disabled={pending}
-          className='w-full bg-gradient-to-r from-sky-500 to-indigo-500'
+          className='w-full bg-linear-to-r from-sky-500 to-indigo-500'
         >
           {isLogin ? 'Login' : 'Sign Up'}
         </Button>

@@ -23,7 +23,11 @@ const Page = async () => {
       .eq('user_id', id)
       .single()
 
-    const profileId = profile?.id ?? ''
+    const profileId = profile?.id
+
+    if (!profileId) {
+      throw new Error('Profile not found')
+    }
 
     const { data: barberId } = await supabase
       .from('barbers')
@@ -45,7 +49,7 @@ const Page = async () => {
 
   return (
     <section className='flex flex-col w-full items-center'>
-      <div className='max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto'>
+      <div className='max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
         <h1 className='text-3xl font-bold'>Account</h1>
         <p className='text-muted-foreground'>
           Welcome, {profile?.display_name}

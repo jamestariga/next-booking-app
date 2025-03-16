@@ -77,7 +77,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
           description='Create a new schedule for a day of the week'
           triggerButton={{
             label: 'Add Schedule',
-            icon: <Plus className='h-4 w-4' />,
+            icon: <Plus className='size-4' />,
           }}
           isOpen={isDialogOpen}
           onOpenChange={setIsDialogOpen}
@@ -139,7 +139,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
                         size='sm'
                         onClick={() => handleEdit(schedule)}
                       >
-                        <Pencil className='h-4 w-4 mr-1' />
+                        <Pencil className='size-4 mr-1' />
                         Edit
                       </Button>
                       <ScheduleDialog
@@ -150,7 +150,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
                           label: 'Delete',
                           variant: 'destructive',
                           size: 'sm',
-                          icon: <Trash2 className='h-4 w-4' />,
+                          icon: <Trash2 className='size-4' />,
                         }}
                         isPending={isPending}
                         onConfirm={() => handleDelete(schedule.id)}
@@ -162,7 +162,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
                       size='sm'
                       onClick={() => setIsDialogOpen(true)}
                     >
-                      <Plus className='h-4 w-4 mr-1' />
+                      <Plus className='size-4 mr-1' />
                       Add Schedule
                     </Button>
                   )}

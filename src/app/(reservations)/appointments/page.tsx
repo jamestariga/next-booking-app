@@ -13,7 +13,11 @@ const Appointments = async () => {
     .eq('user_id', userId)
     .single()
 
-  const profileId = profile?.id ?? ''
+  const profileId = profile?.id
+
+  if (!profileId) {
+    throw new Error('Profile not found')
+  }
 
   const { data: barbersAndAppointments, error } = await supabase
     .from('barbers')
@@ -48,7 +52,7 @@ const Appointments = async () => {
 
   return (
     <section
-      className={`max-w-3xl tablet:max-w-screen-lg w-full space-y-4 mx-auto ${
+      className={`max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto ${
         barbersAndAppointments &&
         barbersAndAppointments.reservations.length > 2 &&
         'py-40'
