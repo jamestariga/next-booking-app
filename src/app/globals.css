@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap')
 layer(base);
 @import 'tailwindcss';
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -38,10 +39,10 @@ layer(base);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 
   --breakpoint-tablet: 67.5rem;
 
@@ -56,7 +57,7 @@ layer(base);
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
-@layer base {
+/* @layer base {
   *,
   ::after,
   ::before,
@@ -64,11 +65,11 @@ layer(base);
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-}
+} */
 
-@utility text-balance {
+/* @utility text-balance {
   text-wrap: balance;
-}
+} */
 
 @layer utilities {
   body {
@@ -80,6 +81,7 @@ layer(base);
 }
 
 :root {
+  --radius: 0.625rem;
   --background: hsl(221 0% 95%);
   --foreground: hsl(221 0% 0%);
   --card: hsl(221 0% 90%);
@@ -108,6 +110,7 @@ layer(base);
   --sidebar-accent-foreground: hsl(221 0% 0%);
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --sidebar: hsl(0 0% 98%);
 }
 
 .dark {
@@ -139,11 +142,12 @@ layer(base);
   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --sidebar: hsl(240 5.9% 10%);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;

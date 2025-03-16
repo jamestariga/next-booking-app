@@ -97,7 +97,7 @@ const UserSheet = ({
                 </SheetDescription>
               </SheetHeader>
 
-              <div className='grid gap-4 py-4'>
+              <div className='grid gap-4 p-4'>
                 {hasSubFields ? (
                   subFields?.map(({ fieldName, label, defaultValue }) => (
                     <div key={fieldName} className='grid gap-2'>
@@ -137,6 +137,9 @@ const UserSheet = ({
               {error && <p className='text-sm text-red-500 mt-2'>{error}</p>}
 
               <SheetFooter>
+                <Button type='button' onClick={handleSave}>
+                  Save changes
+                </Button>
                 <SheetClose asChild>
                   <Button
                     type='button'
@@ -146,9 +149,6 @@ const UserSheet = ({
                     Cancel
                   </Button>
                 </SheetClose>
-                <Button type='button' onClick={handleSave}>
-                  Save changes
-                </Button>
               </SheetFooter>
             </SheetContent>
           </Sheet>
