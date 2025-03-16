@@ -29,8 +29,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null)
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false)
-  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState<boolean>(false)
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
   // Sort schedules by day of week
   const sortedSchedules = [...schedules].sort((a, b) => a.day - b.day)
@@ -51,16 +50,16 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
 
   const handleEdit = (schedule: Schedule) => {
     setEditingSchedule(schedule)
-    setIsUpdateDialogOpen(true)
+    setIsDialogOpen(true)
   }
 
   const handleCreateSuccess = () => {
-    setIsCreateDialogOpen(false)
+    setIsDialogOpen(false)
     router.refresh()
   }
 
   const handleUpdateSuccess = () => {
-    setIsUpdateDialogOpen(false)
+    setIsDialogOpen(false)
     setEditingSchedule(null)
     router.refresh()
   }
@@ -80,8 +79,8 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
             label: 'Add Schedule',
             icon: <Plus className='h-4 w-4' />,
           }}
-          isOpen={isCreateDialogOpen}
-          onOpenChange={setIsCreateDialogOpen}
+          isOpen={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
         >
           <ScheduleForm
             barberId={barberId}
@@ -96,8 +95,8 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
           mode='form'
           title='Edit Schedule'
           description='Update the schedule for this day'
-          isOpen={isUpdateDialogOpen}
-          onOpenChange={setIsUpdateDialogOpen}
+          isOpen={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
         >
           <ScheduleForm
             barberId={barberId}
@@ -161,7 +160,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
                     <Button
                       variant='outline'
                       size='sm'
-                      onClick={() => setIsCreateDialogOpen(true)}
+                      onClick={() => setIsDialogOpen(true)}
                     >
                       <Plus className='h-4 w-4 mr-1' />
                       Add Schedule
