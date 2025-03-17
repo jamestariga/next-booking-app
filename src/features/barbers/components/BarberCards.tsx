@@ -21,7 +21,7 @@ const BarberCards = ({ data }: BarberCardsProps) => {
 
   return (
     <Card
-      className='w-full max-h-[450px] border bg-transparent shadow-none cursor-pointer hover:scale-[1.05] transition-all duration-300'
+      className='w-full py-0 max-h-[450px] border bg-transparent shadow-none cursor-pointer hover:scale-[1.05] transition-all duration-300'
       onClick={() => {
         router.push(`/barber/${data.id}`)
       }}
