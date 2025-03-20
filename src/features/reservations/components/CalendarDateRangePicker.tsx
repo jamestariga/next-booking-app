@@ -116,6 +116,7 @@ const CalendarDateRangePicker = ({
           selected={selectedDate}
           onSelect={setSelectedDate}
           disabled={isDateDisabled}
+          required
           className='rounded-2xl border flex flex-col items-center justify-center shadow-md'
           classNames={{
             table: 'md:min-w-[400px]',
@@ -166,11 +167,14 @@ const CalendarDateRangePicker = ({
         </div>
       )}
 
-      {!isPending && selectedDate && selectedTimeSlot && (
-        <div className='mt-4'>
-          <Button onClick={handleReservation}>Confirm Reservation</Button>
-        </div>
-      )}
+      <div className='mt-4'>
+        <Button
+          onClick={handleReservation}
+          disabled={isPending || !selectedDate || !selectedTimeSlot}
+        >
+          Confirm Reservation
+        </Button>
+      </div>
     </div>
   )
 }
