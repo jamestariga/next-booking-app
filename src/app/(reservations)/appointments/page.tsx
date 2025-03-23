@@ -1,11 +1,16 @@
 import { createClient } from '@/supabase/auth/server'
 import { ProfileAndReservations } from '@/features/reservations/types/reservations.types'
 import ReservationsList from '@/features/reservations/ReservationsList'
+import { cachedUser } from '@/lib/cached'
 
 const Appointments = async () => {
   const supabase = await createClient()
-  const { data: userData } = await supabase.auth.getUser()
-  const userId = userData.user?.id ?? ''
+  const user = await cachedUser()
+  const userId = user?.id
+
+  if (!userId) {
+    throw new Error('User not found')
+  }
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')

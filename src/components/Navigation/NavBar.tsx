@@ -2,13 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import PopOver from './PopOver'
 import { createClient } from '@/supabase/auth/server'
+import { cachedUser } from '@/lib/cached'
 
 const Navbar = async () => {
   const supabase = await createClient()
 
-  const { data } = await supabase.auth.getUser()
-
-  const { user } = data
+  const user = await cachedUser()
 
   const userEmail = user?.email || ''
 

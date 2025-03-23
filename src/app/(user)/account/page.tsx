@@ -8,14 +8,15 @@ import {
 import Link from 'next/link'
 import { createClient } from '@/supabase/auth/server'
 import { filterAccountMenuItems, accountMenuItems } from '@/config/account-menu'
+import { cachedUser } from '@/lib/cached'
 
 const Page = async () => {
   const getUserInfo = async () => {
     const supabase = await createClient()
 
-    const { data } = await supabase.auth.getUser()
+    const user = await cachedUser()
 
-    const id = data.user?.id ?? ''
+    const id = user?.id ?? ''
 
     const { data: profile } = await supabase
       .from('profiles')

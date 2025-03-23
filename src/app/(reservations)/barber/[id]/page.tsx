@@ -1,4 +1,5 @@
 import Reservations from '@/features/reservations/Reservations'
+import { cachedUser } from '@/lib/cached'
 import { createClient } from '@/supabase/auth/server'
 
 type Params = Promise<{ id: number }>
@@ -7,12 +8,11 @@ const BarberReservation = async ({ params }: { params: Params }) => {
   const { id } = await params
   const supabase = await createClient()
 
-  // User data
-  const { data: userData } = await supabase.auth.getUser()
-  const { user } = userData
+  // User Cached Data
+  const user = await cachedUser()
 
-  // Barber data
-  const { data: barberData } = await supabase
+  // Barber Data
+  const { data: barber } = await supabase
     .from('barbers')
     .select(
       `
@@ -24,10 +24,8 @@ const BarberReservation = async ({ params }: { params: Params }) => {
     .eq('id', id)
     .single()
 
-  const barber = barberData?.profiles
-
   if (!user || !barber) {
-    return <div>Loading Page...</div>
+    return <div>No user or barber data found</div>
   }
 
   return (
@@ -35,9 +33,9 @@ const BarberReservation = async ({ params }: { params: Params }) => {
       {user && barber && (
         <Reservations
           userDetails={user}
-          barberId={barberData.id}
-          barberName={barber.display_name}
-          schedule={barberData.schedule}
+          barberId={barber.id}
+          barberName={barber.profiles.display_name}
+          schedule={barber.schedule}
         />
       )}
     </div>
