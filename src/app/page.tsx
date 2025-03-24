@@ -1,12 +1,15 @@
 import BarberList from '@/features/barbers/BarberList'
-import { cachedUser } from '@/lib/cached'
+import Navbar from '@/components/Navigation/NavBar'
 
 const Home = async () => {
-  const user = await cachedUser()
-
-  if (!user) return <div>Loading...</div>
-
-  return <BarberList />
+  return (
+    <>
+      <Navbar fixed={true} />
+      <main className='px-8 min-h-screen flex justify-center items-center'>
+        <BarberList />
+      </main>
+    </>
+  )
 }
 
 export default Home

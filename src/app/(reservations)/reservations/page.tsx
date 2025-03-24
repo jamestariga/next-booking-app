@@ -37,8 +37,6 @@ const Reservations = async () => {
     })
     .single<ProfileAndReservations>()
 
-  console.log(profileAndReservations)
-
   if (error) {
     console.error('Error fetching data:', error)
   }

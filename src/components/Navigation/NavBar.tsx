@@ -4,7 +4,7 @@ import PopOver from './PopOver'
 import { createClient } from '@/supabase/auth/server'
 import { cachedUser } from '@/lib/cached'
 
-const Navbar = async () => {
+const Navbar = async ({ fixed = false }: { fixed: boolean }) => {
   const supabase = await createClient()
 
   const user = await cachedUser()
@@ -24,7 +24,11 @@ const Navbar = async () => {
   const isBarber = (profileBarber && profileBarber?.barber.length > 0) || false
 
   return (
-    <nav className='fixed top-0 left-0 w-full z-50 bg-background border-b border-border'>
+    <nav
+      className={`${
+        fixed ? 'fixed top-0 left-0' : 'relative'
+      } w-full z-50 bg-background border-b border-border`}
+    >
       <div className='container mx-auto flex justify-between items-center px-8'>
         <Link href='/' className='flex items-center space-x-4'>
           <Image
