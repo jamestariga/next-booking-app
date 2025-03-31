@@ -20,13 +20,19 @@ type ScheduleFormProps = {
   barberId: number
   mode: 'create' | 'update'
   schedule?: Schedule
+  day?: number
   onSuccess?: () => void
+}
+
+const formatTimeForForm = (time: string): string => {
+  return time.substring(0, 5)
 }
 
 const ScheduleForm = ({
   barberId,
   mode,
   schedule,
+  day,
   onSuccess,
 }: ScheduleFormProps) => {
   const router = useRouter()
@@ -44,12 +50,12 @@ const ScheduleForm = ({
       isEditing && schedule
         ? {
             day: schedule.day,
-            start_time: schedule.start_time,
-            end_time: schedule.end_time,
+            start_time: formatTimeForForm(schedule.start_time),
+            end_time: formatTimeForForm(schedule.end_time),
             is_active: schedule.is_active,
           }
         : {
-            day: 1, // Default to Monday
+            day: day ?? 1,
             start_time: '09:00',
             end_time: '17:00',
             is_active: true,

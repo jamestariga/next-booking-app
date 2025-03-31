@@ -4,7 +4,7 @@ import { getBarberSchedule } from '@/server-functions/schedule'
 
 type Params = Promise<{ id: number }>
 
-export default async function SchedulePage({ params }: { params: Params }) {
+const SchedulePage = async ({ params }: { params: Params }) => {
   const { id } = await params
 
   if (isNaN(id)) {
@@ -41,3 +41,5 @@ export default async function SchedulePage({ params }: { params: Params }) {
     )
   }
 }
+
+export default SchedulePage

@@ -47,10 +47,10 @@ const ScheduleFormFields = ({
             <Select
               disabled={isPending}
               onValueChange={(value) => field.onChange(parseInt(value))}
-              defaultValue={field.value.toString()}
+              value={field.value.toString()}
             >
               <FormControl>
-                <SelectTrigger>
+                <SelectTrigger className='w-full h-10'>
                   <SelectValue placeholder='Select a day' />
                 </SelectTrigger>
               </FormControl>
@@ -77,10 +77,10 @@ const ScheduleFormFields = ({
               <Select
                 disabled={isPending}
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
               >
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className='w-full h-10'>
                     <SelectValue placeholder='Select start time' />
                   </SelectTrigger>
                 </FormControl>
@@ -106,10 +106,10 @@ const ScheduleFormFields = ({
               <Select
                 disabled={isPending}
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
               >
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className='w-full h-10'>
                     <SelectValue placeholder='Select end time' />
                   </SelectTrigger>
                 </FormControl>

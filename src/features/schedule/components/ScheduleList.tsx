@@ -29,8 +29,14 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null)
-  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState<boolean>(false)
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false)
+  const [dialogState, setDialogState] = useState<{
+    isOpen: boolean
+    mode: 'create' | 'update' | null
+  }>({
+    isOpen: false,
+    mode: null,
+  })
+  const [selectedDay, setSelectedDay] = useState<number | null>(null)
 
   // Sort schedules by day of week
   const sortedSchedules = [...schedules].sort((a, b) => a.day - b.day)
@@ -40,7 +46,6 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
       try {
         await deleteSchedule(id)
         toast.success('Schedule deleted successfully')
-        // Refresh the page to update the UI or revalidate the path in the server function
         router.refresh()
       } catch (error) {
         console.error(error)
@@ -51,18 +56,30 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
 
   const handleEdit = (schedule: Schedule) => {
     setEditingSchedule(schedule)
-    setIsUpdateDialogOpen(true)
+    setDialogState({ isOpen: true, mode: 'update' })
   }
 
   const handleCreateSuccess = () => {
-    setIsCreateDialogOpen(false)
+    setDialogState({ isOpen: false, mode: null })
     router.refresh()
   }
 
   const handleUpdateSuccess = () => {
-    setIsUpdateDialogOpen(false)
+    setDialogState({ isOpen: false, mode: null })
     setEditingSchedule(null)
     router.refresh()
+  }
+
+  const handleCreateOpen = (day: number) => {
+    setDialogState({ isOpen: true, mode: 'create' })
+    setSelectedDay(day)
+  }
+
+  const handleDialogClose = () => {
+    setDialogState({ isOpen: false, mode: null })
+    if (dialogState.mode === 'create') {
+      setSelectedDay(1)
+    }
   }
 
   // Create a map of days to easily check which days have schedules
@@ -80,12 +97,13 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
             label: 'Add Schedule',
             icon: <Plus className='size-4' />,
           }}
-          isOpen={isCreateDialogOpen}
-          onOpenChange={setIsCreateDialogOpen}
+          isOpen={dialogState.isOpen && dialogState.mode === 'create'}
+          onOpenChange={handleDialogClose}
         >
           <ScheduleForm
             barberId={barberId}
             mode='create'
+            day={selectedDay ?? undefined}
             onSuccess={handleCreateSuccess}
           />
         </ScheduleDialog>
@@ -96,8 +114,8 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
           mode='form'
           title='Edit Schedule'
           description='Update the schedule for this day'
-          isOpen={isUpdateDialogOpen}
-          onOpenChange={setIsUpdateDialogOpen}
+          isOpen={dialogState.isOpen && dialogState.mode === 'update'}
+          onOpenChange={handleDialogClose}
         >
           <ScheduleForm
             barberId={barberId}
@@ -161,7 +179,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
                     <Button
                       variant='outline'
                       size='sm'
-                      onClick={() => setIsCreateDialogOpen(true)}
+                      onClick={() => handleCreateOpen(day.value)}
                     >
                       <Plus className='size-4 mr-1' />
                       Add Schedule
