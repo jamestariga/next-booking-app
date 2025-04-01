@@ -30,7 +30,7 @@ const Navbar = async ({ fixed = false }: { fixed: boolean }) => {
       } w-full z-50 bg-background border-b border-border`}
     >
       <div className='container mx-auto flex justify-between items-center px-8'>
-        <Link href='/' className='flex items-center space-x-4'>
+        <Link href='/' scroll={false} className='flex items-center space-x-4'>
           <Image
             src='/kolstudio.png'
             alt='Company Logo'
