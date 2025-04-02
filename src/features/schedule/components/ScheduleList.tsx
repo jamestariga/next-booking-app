@@ -77,7 +77,13 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
 
   const handleDialogClose = () => {
     setDialogState({ isOpen: false, mode: null })
-    if (dialogState.mode === 'create') {
+  }
+
+  const handleDialogOpenChange = (open: boolean) => {
+    if (open) {
+      setDialogState({ isOpen: true, mode: 'create' })
+    } else {
+      setDialogState({ isOpen: false, mode: null })
       setSelectedDay(1)
     }
   }
@@ -98,7 +104,7 @@ const ScheduleList = ({ schedules, barberId }: ScheduleListProps) => {
             icon: <Plus className='size-4' />,
           }}
           isOpen={dialogState.isOpen && dialogState.mode === 'create'}
-          onOpenChange={handleDialogClose}
+          onOpenChange={handleDialogOpenChange}
         >
           <ScheduleForm
             barberId={barberId}
