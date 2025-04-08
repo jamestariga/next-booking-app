@@ -1,5 +1,6 @@
 import { Service } from '@/server-functions/services'
 import ServicesList from './components/ServiceList'
+
 type ServicesProps = {
   services: Service[]
   barberId: number
@@ -7,7 +8,7 @@ type ServicesProps = {
 
 const Services = ({ services, barberId }: ServicesProps) => {
   return (
-    <div className='max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
+    <div className='w-full '>
       <ServicesList services={services} barberId={barberId} />
     </div>
   )

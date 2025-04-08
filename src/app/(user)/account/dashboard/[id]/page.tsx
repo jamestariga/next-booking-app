@@ -20,7 +20,6 @@ const DashboardPage = async ({ params }: { params: Params }) => {
         <p className='text-muted-foreground'>
           Manage your services. You can add, edit, or remove services.
         </p>
-
         <Services services={services} barberId={id} />
       </div>
     </section>
