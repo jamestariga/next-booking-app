@@ -82,12 +82,24 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
-  // **Protect /account/schedule/[barber_id] routes:**
-  if (user && request.nextUrl.pathname.startsWith('/account/schedule/')) {
+  // **Protect /account/schedule/[barber_id] and /account/dashboard/[barber_id] routes:**
+  if (
+    user &&
+    (request.nextUrl.pathname.startsWith('/account/schedule/') ||
+      request.nextUrl.pathname.startsWith('/account/dashboard/'))
+  ) {
     // Extract the barber_id from the pathname
-    const match = request.nextUrl.pathname.match(/^\/account\/schedule\/(\d+)$/)
+    const scheduleMatch = request.nextUrl.pathname.match(
+      /^\/account\/schedule\/(\d+)$/
+    )
+    const dashboardMatch = request.nextUrl.pathname.match(
+      /^\/account\/dashboard\/(\d+)$/
+    )
+    const match = scheduleMatch || dashboardMatch
+
     if (match) {
       const requestedBarberId = Number(match[1])
+      const routeType = scheduleMatch ? 'schedule' : 'dashboard'
 
       // Check if the user is associated with this barber_id
       const { data: barber } = profile?.id
@@ -111,9 +123,9 @@ export async function updateSession(request: NextRequest) {
           : { data: null }
 
         if (userBarber) {
-          // Redirect to the user's own barber schedule
+          // Redirect to the user's own barber schedule/dashboard
           return NextResponse.redirect(
-            new URL(`/account/schedule/${userBarber.id}`, request.url)
+            new URL(`/account/${routeType}/${userBarber.id}`, request.url)
           )
         } else {
           // If the user is not a barber, redirect to their account page
