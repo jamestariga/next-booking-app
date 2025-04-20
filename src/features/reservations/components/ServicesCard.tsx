@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Service } from '../types/reservations.types'
+import { Service } from '@/server-functions/services'
+
 type ServicesCardProps = {
   data: Service
   handleSelection: (service: Service) => void

@@ -18,7 +18,8 @@ const BarberReservation = async ({ params }: { params: Params }) => {
       `
       *,
       profiles (id, display_name),
-      schedule(*)
+      schedule(*),
+      services(*)
       `
     )
     .eq('id', id)
@@ -29,13 +30,14 @@ const BarberReservation = async ({ params }: { params: Params }) => {
   }
 
   return (
-    <div className='mx-auto max-w-fit'>
+    <div className='max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
       {user && barber && (
         <Reservations
           userDetails={user}
           barberId={barber.id}
           barberName={barber.profiles.display_name}
           schedule={barber.schedule}
+          services={barber.services}
         />
       )}
     </div>

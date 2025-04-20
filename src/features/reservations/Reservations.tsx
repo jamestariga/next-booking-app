@@ -5,7 +5,7 @@ import useGetUserById from '@/hooks/useGetUserById'
 import { User } from '@supabase/supabase-js'
 import CalendarDateRangePicker from './components/CalendarDateRangePicker'
 import ServiceSelection from './components/ServiceSelection'
-import { Service } from './types/reservations.types'
+import { Service } from '@/server-functions/services'
 import { Schedule } from '@/server-functions/schedule'
 
 type ReservationsProps = {
@@ -13,6 +13,7 @@ type ReservationsProps = {
   barberId: number
   barberName: string
   schedule: Schedule[]
+  services: Service[]
 }
 
 const Reservations = ({
@@ -20,6 +21,7 @@ const Reservations = ({
   barberId,
   barberName,
   schedule,
+  services,
 }: ReservationsProps) => {
   const { id } = userDetails
   const userData = useGetUserById(id)
@@ -32,12 +34,15 @@ const Reservations = ({
   }
 
   return (
-    <div className={`space-y-6 w-full ${selectedServiceDetails && 'py-40'}`}>
+    <div className={`space-y-6 w-full`}>
       <h1 className='font-bold text-xl md:text-2xl'>
         Appointment with {barberName}!
       </h1>
       {!selectedServiceDetails && (
-        <ServiceSelection onSelectService={handleServiceSelection} />
+        <ServiceSelection
+          services={services}
+          onSelectService={handleServiceSelection}
+        />
       )}
       {selectedServiceDetails && (
         <CalendarDateRangePicker

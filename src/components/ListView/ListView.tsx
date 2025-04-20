@@ -41,14 +41,12 @@ export default function ListView<T>({
     <div
       className={`${
         display === 'grid'
-          ? `${`grid ${getGridTemplateColumns(
-              data.length
-            )} place-items-center gap-8 w-full`}`
+          ? `${`grid ${getGridTemplateColumns(data.length)} gap-8 w-full`}`
           : `flex flex-col gap-4 w-full`
       }`}
     >
       {data.map((item, index) => (
-        <div key={index} className='w-full place-items-center'>
+        <div key={index} className='w-full h-full flex items-stretch'>
           {renderItem(item)}
         </div>
       ))}

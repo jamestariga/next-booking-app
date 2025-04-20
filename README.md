@@ -29,15 +29,11 @@
   - [x] Create CRUD operations to allow barbers to add/delete/edit custom schedules
 - [x] Upgrade Tailwind to v4 (Completed on March 15, 2025)
   - [x] Regression Test
+- [x] Move the services to the backend rather than being hardcoded
+  - [x] Create a table to store the services
+  - [x] Create CRUD operations to allow barbers to add/delete/edit custom services
 
 ## In Progress
-
-- [ ] Move the services to the backend rather than being hardcoded
-
-  - [x] Create a table to store the services
-  - [ ] Create CRUD operations to allow barbers to add/delete/edit custom services
-
-## To Do
 
 - [ ] Create a tab component to display the different status of a reservation
 
@@ -47,6 +43,8 @@
     - [ ] Cancelled
     - [ ] Completed
     - [ ] All
+
+## To Do
 
 - [ ] Create a page for barber to upload their profile picture
 

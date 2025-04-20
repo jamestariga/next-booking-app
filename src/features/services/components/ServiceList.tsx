@@ -99,8 +99,8 @@ const ServicesList = ({ services, barberId }: ServiceListProps) => {
         <ListView
           data={services}
           renderItem={(service) => (
-            <Card key={service.id} className='w-full'>
-              <CardHeader className='pb-2'>
+            <Card key={service.id} className='w-full h-full flex flex-col'>
+              <CardHeader className='pb-2 flex-1'>
                 <div className='flex justify-between items-start'>
                   <CardTitle>{service.service_name}</CardTitle>
                   <Badge variant={service.is_active ? 'default' : 'secondary'}>
@@ -109,7 +109,7 @@ const ServicesList = ({ services, barberId }: ServiceListProps) => {
                 </div>
                 <CardDescription>${service.price.toFixed(2)}</CardDescription>
               </CardHeader>
-              <CardContent className='flex justify-end space-x-2 pt-0'>
+              <CardContent className='pt-0 mt-auto flex justify-end space-x-2'>
                 <Button
                   variant='ghost'
                   size='sm'

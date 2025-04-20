@@ -1,10 +1,8 @@
 'use server'
 
 import { State } from '@/features/auth/types/auth.types'
-import {
-  AppointmentStatus,
-  Service,
-} from '@/features/reservations/types/reservations.types'
+import { AppointmentStatus } from '@/features/reservations/types/reservations.types'
+import { Service } from '@/server-functions/services'
 import { createClient } from '@/supabase/auth/server'
 import { revalidatePath } from 'next/cache'
 

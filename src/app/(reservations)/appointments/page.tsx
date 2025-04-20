@@ -56,13 +56,7 @@ const Appointments = async () => {
   }
 
   return (
-    <section
-      className={`max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto ${
-        barbersAndAppointments &&
-        barbersAndAppointments.reservations.length > 2 &&
-        'py-40'
-      }`}
-    >
+    <section className='max-w-3xl tablet:max-w-(--breakpoint-lg) w-full space-y-4 mx-auto'>
       <h1 className='text-2xl font-bold'>My Appointments</h1>
       {barbersAndAppointments && (
         <ReservationsList reservations={barbersAndAppointments.reservations} />
